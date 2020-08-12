@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="_50_dp">50dp</dimen>
+    <dimen name="_100_dp">100dp</dimen>
+    <dimen name="_5_dp">5dp</dimen>
+
+    //text sizes
+    <dimen name="_15_sp">15sp</dimen>
+    <dimen name="_12_sp">12sp</dimen>
+    <dimen name="_24_dp">24dp</dimen>
+    <dimen name="_14_dp">14dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="toolbar_size_height">46dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <!--Machine show case layout dimens-->
+    <dimen name="title_text_size_layout">  17dp </dimen>
+    <dimen name="small_text_size_layout">  15dp </dimen>
+    <dimen name="view_more_details_size">  12dp </dimen>
+    <dimen name="default_margin_for_add_machines">  12dp </dimen>
+    <dimen name="default_margin_for_machine_rates">  15dp </dimen>
+    <dimen name="_55_dp">55dp</dimen>
+    <dimen name="_2_dp">2dp</dimen>
+    <dimen name="_15_dp">15dp</dimen>
+    <dimen name="_17_dp">17dp</dimen>
+    <dimen name="_20_dp">20dp</dimen>
+    <dimen name="_10_dp">10dp</dimen>
+    <dimen name="_12_dp">12dp</dimen>
+    <dimen name="_30_dp">30dp</dimen>
+</resources>
