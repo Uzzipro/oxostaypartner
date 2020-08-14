@@ -17,11 +17,11 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <!--Machine show case layout dimens-->
-    <dimen name="title_text_size_layout">  17dp </dimen>
-    <dimen name="small_text_size_layout">  15dp </dimen>
-    <dimen name="view_more_details_size">  12dp </dimen>
-    <dimen name="default_margin_for_add_machines">  12dp </dimen>
-    <dimen name="default_margin_for_machine_rates">  15dp </dimen>
+    <dimen name="title_text_size_layout">17dp</dimen>
+    <dimen name="small_text_size_layout">15dp</dimen>
+    <dimen name="view_more_details_size">12dp</dimen>
+    <dimen name="default_margin_for_add_machines">12dp</dimen>
+    <dimen name="default_margin_for_machine_rates">15dp</dimen>
     <dimen name="_55_dp">55dp</dimen>
     <dimen name="_2_dp">2dp</dimen>
     <dimen name="_15_dp">15dp</dimen>
