@@ -1,4 +1,4 @@
-package com.partner.oxostay.activities.ui.slideshow;
+package com.partner.oxostay.activities.ui.amenities;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,19 +12,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.partner.oxostay.activities.R;
+import com.partner.oxostay.R;
 
-public class SlideshowFragment extends Fragment {
+public class AmenitiesFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private AmenitiesViewModel amenitiesViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        amenitiesViewModel =
+                ViewModelProviders.of(this).get(AmenitiesViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_amenities, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        amenitiesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

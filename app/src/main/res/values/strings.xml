@@ -18,8 +18,25 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+
+    <!--Nav menu-->
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <string name="menu_bookings">Bookings</string>
+    <string name="menu_manage_rates_rooms">Manage rates / rooms</string>
+    <string name="menu_amenities">Amenities</string>
+    <string name="menu_policy_updates">Policy updates</string>
+    <string name="menu_user_access">User access</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_change_password">Change password</string>
+    <string name="menu_logout">Logout</string>
+
+
+    <!-- My Bookings-->
+    <string name="upcoming_bookings">Upcoming Bookings</string>
+    <string name="bookings_history">Bookings History</string>
+
 
 </resources>

@@ -1,16 +1,16 @@
-package com.partner.oxostay.activities.ui.gallery;
+package com.partner.oxostay.activities.ui.manageratesroom;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class ManageratesroomViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public ManageratesroomViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("This is Manageratesroom fragment");
     }
 
     public LiveData<String> getText() {

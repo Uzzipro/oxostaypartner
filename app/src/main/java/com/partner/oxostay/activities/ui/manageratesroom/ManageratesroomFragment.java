@@ -1,6 +1,8 @@
-package com.partner.oxostay.activities.ui.gallery;
+package com.partner.oxostay.activities.ui.manageratesroom;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +14,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.partner.oxostay.activities.R;
+import com.partner.oxostay.R;
+import com.partner.oxostay.activities.LoginActivity;
 
-public class GalleryFragment extends Fragment {
+public class ManageratesroomFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
+    private ManageratesroomViewModel manageratesroomViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        manageratesroomViewModel =
+                ViewModelProviders.of(this).get(ManageratesroomViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_manageratesroom, container, false);
         final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        manageratesroomViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

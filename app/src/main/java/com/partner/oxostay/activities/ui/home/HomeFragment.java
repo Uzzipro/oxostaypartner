@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.partner.oxostay.activities.R;
+import com.partner.oxostay.R;
 
 public class HomeFragment extends Fragment {
 
