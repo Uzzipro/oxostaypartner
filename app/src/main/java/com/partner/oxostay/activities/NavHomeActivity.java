@@ -5,12 +5,17 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.partner.oxostay.R;
+import com.partner.oxostay.activities.ui.amenities.AmenitiesActivity;
 import com.partner.oxostay.activities.ui.bookings.BookingsActivity;
+import com.partner.oxostay.activities.ui.changepassword.ChangepasswordActivity;
+import com.partner.oxostay.activities.ui.policy.PolicyActivity;
+import com.partner.oxostay.activities.ui.profile.ProfileActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -27,6 +32,8 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActionBarDrawerToggle toggle;
+    private Toolbar toolbar;
+    private Button btUpcomingBookings, btBookingsHistory;
 
 
     @Override
@@ -64,9 +71,33 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
+        setUpViews();
     }
 
+
+    private void setUpViews()
+    {
+        btUpcomingBookings = findViewById(R.id.btUpcomingBookings);
+        btBookingsHistory = findViewById(R.id.btBookingsHistory);
+
+        btUpcomingBookings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btUpcomingBookings.setBackgroundResource(R.drawable.bookings_bt_left_select);
+                btBookingsHistory.setBackgroundResource(R.drawable.bookings_bt_right);
+            }
+        });
+
+        btBookingsHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btBookingsHistory.setBackgroundResource(R.drawable.bookings_bt_right_select);
+                btUpcomingBookings.setBackgroundResource(R.drawable.bookings_bt_left);
+
+            }
+        });
+
+    }
 
 
     @Override
@@ -93,18 +124,33 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
 
         switch (id) {
             case R.id.nav_bookings:
-                activityIntent = new Intent(NavHomeActivity.this, BookingsActivity.class);
+                activityIntent = new Intent(NavHomeActivity.this, NavHomeActivity.class);
                 startActivity(activityIntent);
                 drawer.closeDrawer(GravityCompat.START);
+                break;
 
+            case R.id.nav_amenities:
+                activityIntent = new Intent(NavHomeActivity.this, AmenitiesActivity.class);
+                startActivity(activityIntent);
                 break;
 
             case R.id.nav_manageratesroom:
-                Intent x = new Intent(this, LoginActivity.class);
+                Intent x = new Intent(this, NavHomeActivity.class);
                 startActivity(x);
                 drawer.closeDrawer(GravityCompat.START);
                 break;
-
+            case R.id.nav_policy_updates:
+                activityIntent = new Intent(NavHomeActivity.this, PolicyActivity.class);
+                startActivity(activityIntent);
+                break;
+            case R.id.nav_change_password:
+                activityIntent = new Intent(NavHomeActivity.this, ChangepasswordActivity.class);
+                startActivity(activityIntent);
+                break;
+            case R.id.nav_profile:
+                activityIntent = new Intent(NavHomeActivity.this, ProfileActivity.class);
+                startActivity(activityIntent);
+                break;
         }
         return true;
     }

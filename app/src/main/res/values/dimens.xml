@@ -31,4 +31,7 @@
     <dimen name="_30_dp">30dp</dimen>
     <dimen name="toolbar_size_default">70dp</dimen>
     <dimen name="toolbar_title_size">18dp</dimen>
+    <dimen name="default_icon_size">24dp</dimen>
+    <dimen name="_8_dp">8dp</dimen>
+    <dimen name="_70_dp">70dp</dimen>
 </resources>
