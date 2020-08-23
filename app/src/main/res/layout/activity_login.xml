@@ -7,112 +7,125 @@
     android:background="@drawable/partnerbg"
     tools:context=".activities.LoginActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvAppPrefix"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_100_dp"
-        android:layout_marginTop="@dimen/_15_dp"
-        android:fontFamily="@font/robotomedium"
-        android:gravity="left"
-        android:text="@string/app_name_prefix"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_30_dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvAppSuffix"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/_100_dp"
-        android:fontFamily="@font/robotomedium"
-        android:gravity="right"
-        android:text="@string/app_name_suffix"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_15_dp"
-        app:layout_constraintTop_toBottomOf="@id/tvAppPrefix" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvLoginNow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_50_dp"
-        android:fontFamily="@font/robotomedium"
-        android:gravity="center"
-        android:text="@string/login_now"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_30_dp"
-        app:layout_constraintTop_toBottomOf="@id/tvAppSuffix" />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/llLoginPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_5_dp"
-        android:layout_marginTop="@dimen/_15_dp"
-        android:orientation="vertical"
-        android:padding="@dimen/_20_dp"
-        app:layout_constraintTop_toBottomOf="@id/tvLoginNow">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvEmail"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10_dp"
-            android:fontFamily="@font/robotomedium"
-            android:gravity="left"
-            android:text="@string/mobile_number"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_17_dp"
-            app:layout_constraintTop_toBottomOf="@id/tvLoginNow" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10_dp"
-            android:background="@drawable/edittextstyle"
-            android:elevation="@dimen/_5_dp"
-            android:padding="@dimen/_10_dp"
-            android:textColorHint="@color/colorGrey" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAppPrefix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_100_dp"
+                android:layout_marginTop="@dimen/_15_dp"
+                android:fontFamily="@font/robotomedium"
+                android:gravity="left"
+                android:text="@string/app_name_prefix"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_30_dp"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10_dp"
-            android:layout_marginTop="@dimen/_5_dp"
-            android:fontFamily="@font/robotomedium"
-            android:gravity="left"
-            android:text="@string/password"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_17_dp"
-            app:layout_constraintTop_toBottomOf="@id/tvLoginNow" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAppSuffix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_100_dp"
+                android:fontFamily="@font/robotomedium"
+                android:gravity="right"
+                android:text="@string/app_name_suffix"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_15_dp"
+                app:layout_constraintTop_toBottomOf="@id/tvAppPrefix" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10_dp"
-            android:background="@drawable/edittextstyle"
-            android:elevation="@dimen/_5_dp"
-            android:padding="@dimen/_10_dp"
-            android:textColorHint="@color/colorGrey" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLoginNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_50_dp"
+                android:fontFamily="@font/robotomedium"
+                android:gravity="center"
+                android:text="@string/login_now"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_30_dp"
+                app:layout_constraintTop_toBottomOf="@id/tvAppSuffix" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llLoginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_5_dp"
+                android:layout_marginTop="@dimen/_15_dp"
+                android:orientation="vertical"
+                android:padding="@dimen/_20_dp"
+                app:layout_constraintTop_toBottomOf="@id/tvLoginNow">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10_dp"
+                    android:fontFamily="@font/robotomedium"
+                    android:gravity="left"
+                    android:text="@string/mobile_number"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_17_dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvLoginNow" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10_dp"
+                    android:background="@drawable/edittextstyle"
+                    android:elevation="@dimen/_5_dp"
+                    android:padding="@dimen/_10_dp"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorGrey" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10_dp"
+                    android:layout_marginTop="@dimen/_5_dp"
+                    android:fontFamily="@font/robotomedium"
+                    android:gravity="left"
+                    android:text="@string/password"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_17_dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvLoginNow" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10_dp"
+                    android:background="@drawable/edittextstyle"
+                    android:elevation="@dimen/_5_dp"
+                    android:padding="@dimen/_10_dp"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorGrey" />
 
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btLogin"
-            android:layout_width="match_parent"
-            android:text="@string/login"
-            android:background="@drawable/btloginstyle"
-            android:textSize="@dimen/_17_dp"
-            android:textColor="@color/colorWhite"
-            android:padding="@dimen/_5_dp"
-            android:layout_marginTop="@dimen/_50_dp"
-            android:layout_marginHorizontal="@dimen/_20_dp"
-            android:fontFamily="@font/robotomedium"
-            android:layout_height="wrap_content" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20_dp"
+                    android:layout_marginTop="@dimen/_50_dp"
+                    android:background="@drawable/btloginstyle"
+                    android:fontFamily="@font/robotomedium"
+                    android:padding="@dimen/_5_dp"
+                    android:text="@string/login"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_17_dp" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

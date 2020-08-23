@@ -2,31 +2,28 @@ package com.partner.oxostay.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.Button;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-import com.partner.oxostay.R;
-import com.partner.oxostay.activities.ui.amenities.AmenitiesActivity;
-import com.partner.oxostay.activities.ui.bookings.BookingsActivity;
-import com.partner.oxostay.activities.ui.changepassword.ChangepasswordActivity;
-import com.partner.oxostay.activities.ui.policy.PolicyActivity;
-import com.partner.oxostay.activities.ui.profile.ProfileActivity;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.ui.AppBarConfiguration;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.partner.oxostay.R;
+import com.partner.oxostay.activities.ui.amenities.AmenitiesActivity;
+import com.partner.oxostay.activities.ui.changepassword.ChangepasswordActivity;
+import com.partner.oxostay.activities.ui.policy.PolicyActivity;
+import com.partner.oxostay.activities.ui.profile.ProfileActivity;
 
 public class NavHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -75,8 +72,7 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
     }
 
 
-    private void setUpViews()
-    {
+    private void setUpViews() {
         btUpcomingBookings = findViewById(R.id.btUpcomingBookings);
         btBookingsHistory = findViewById(R.id.btBookingsHistory);
 
@@ -135,13 +131,9 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
                 break;
 
             case R.id.nav_manageratesroom:
-                Intent x = new Intent(this, NavHomeActivity.class);
-                startActivity(x);
-                drawer.closeDrawer(GravityCompat.START);
-                break;
-            case R.id.nav_policy_updates:
-                activityIntent = new Intent(NavHomeActivity.this, PolicyActivity.class);
-                startActivity(activityIntent);
+            case R.id.nav_user_access:
+            case R.id.nav_logout:
+                makeToast("Coming soon!");
                 break;
             case R.id.nav_change_password:
                 activityIntent = new Intent(NavHomeActivity.this, ChangepasswordActivity.class);
@@ -151,7 +143,15 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
                 activityIntent = new Intent(NavHomeActivity.this, ProfileActivity.class);
                 startActivity(activityIntent);
                 break;
+            case R.id.nav_policy_updates:
+                activityIntent = new Intent(NavHomeActivity.this, PolicyActivity.class);
+                startActivity(activityIntent);
+                break;
         }
         return true;
+    }
+
+    private void makeToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }
