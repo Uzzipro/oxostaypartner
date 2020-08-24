@@ -2,6 +2,7 @@ package com.partner.oxostay.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,9 +25,11 @@ import com.partner.oxostay.activities.ui.amenities.AmenitiesActivity;
 import com.partner.oxostay.activities.ui.changepassword.ChangepasswordActivity;
 import com.partner.oxostay.activities.ui.policy.PolicyActivity;
 import com.partner.oxostay.activities.ui.profile.ProfileActivity;
+import com.partner.oxostay.utils.Constants;
 
 public class NavHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private String TAG = "NavHomeActivity";
     private AppBarConfiguration mAppBarConfiguration;
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
@@ -92,7 +95,6 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
 
             }
         });
-
     }
 
 
