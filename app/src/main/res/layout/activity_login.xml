@@ -112,13 +112,12 @@
                     android:textColorHint="@color/colorGrey" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAlreadyLoggedin"
+                    android:id="@+id/tvRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10_dp"
                     android:fontFamily="@font/robotomedium"
                     android:gravity="left"
-                    android:visibility="gone"
                     android:text="@string/not_registered"
                     android:background="#75000000"
                     android:textColor="@color/colorWhite"
