@@ -179,6 +179,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if(registerDto.getFullName() != null && registerDto.getPhNumber() != null && registerDto.getAddress() != null
                 && registerDto.getAadhaarCard() != null && registerDto.getPanCard() != null && registerDto.getGstCert() != null)
                 {
+                    registerDto.setApprovedOrNot(false);
                     dbRef.child(Constants.OXO_STAY_PARTNER).child("hotelstobeapproved").push().setValue(registerDto);
 
                 }

@@ -7,6 +7,15 @@ public class RegisterDto {
     private String aadhaarCard;
     private String panCard;
     private String gstCert;
+    private boolean approvedOrNot;
+
+    public boolean getApprovedOrNot() {
+        return approvedOrNot;
+    }
+
+    public void setApprovedOrNot(boolean approvedOrNot) {
+        this.approvedOrNot = approvedOrNot;
+    }
 
     public String getAadhaarCard() {
         return aadhaarCard;

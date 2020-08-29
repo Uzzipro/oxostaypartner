@@ -23,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.partner.oxostay.R;
 import com.partner.oxostay.activities.ui.amenities.AmenitiesActivity;
 import com.partner.oxostay.activities.ui.changepassword.ChangepasswordActivity;
+import com.partner.oxostay.activities.ui.manageratesroom.ManageActivity;
 import com.partner.oxostay.activities.ui.policy.PolicyActivity;
 import com.partner.oxostay.activities.ui.profile.ProfileActivity;
 import com.partner.oxostay.utils.Constants;
@@ -133,6 +134,9 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
                 break;
 
             case R.id.nav_manageratesroom:
+                activityIntent = new Intent(NavHomeActivity.this, ManageActivity.class);
+                startActivity(activityIntent);
+                break;
             case R.id.nav_user_access:
             case R.id.nav_logout:
                 makeToast("Coming soon!");

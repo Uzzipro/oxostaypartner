@@ -54,5 +54,9 @@
     <string name="pan_card">Click here to select your PAN Card</string>
     <string name="gst_certificate">Click here to select your GST Certificate</string>
 
-
+    <!--Manage-->
+    <string name="choose_from">Choose Date:</string>
+    <string name="three_hours_rate">1119</string>
+    <string name="six_hours">1400</string>
+    <string name="twelve_hours">1800</string>
 </resources>
