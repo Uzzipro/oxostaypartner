@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     dbRefLogin.orderByChild("phNumber").equalTo(phNumberstr).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot != null) {
+                            if (dataSnapshot.hasChildren()) {
                                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                     LoginDto loginDto = dataSnapshot1.getValue(LoginDto.class);
                                     if (loginDto.getPassword().equals(passwordstr)) {
@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                             } else {
-                                Log.e(TAG, "onDataChange: no Data found from this phone number");
+                               makeToast("No Data found from this phone number");
 
                             }
 

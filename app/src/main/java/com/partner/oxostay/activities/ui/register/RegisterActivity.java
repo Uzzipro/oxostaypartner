@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +47,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
+
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     private ImageView ivBack;
@@ -61,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String gstCert;
     private RegisterDto registerDto;
     private DatabaseReference dbRef;
+    private ACProgressFlower dialog;
 
 
     @Override
@@ -91,6 +96,13 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
+        /**Loader*/
+        dialog = new ACProgressFlower.Builder(this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .text("Title is here")
+                .fadeColor(Color.DKGRAY).build();
 
         /**Aadhaar card front button click**/
         btAadhaar.setOnClickListener(new View.OnClickListener() {
@@ -176,16 +188,40 @@ public class RegisterActivity extends AppCompatActivity {
         btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.show();
                 if(registerDto.getFullName() != null && registerDto.getPhNumber() != null && registerDto.getAddress() != null
                 && registerDto.getAadhaarCard() != null && registerDto.getPanCard() != null && registerDto.getGstCert() != null)
                 {
                     registerDto.setApprovedOrNot(false);
+                    registerDto.setHotel_address("");
+                    registerDto.setHotel_desc("");
+                    registerDto.setHotel_email("");
+                    registerDto.setHotel_name("");
+                    registerDto.setHotel_pictures("");
+                    registerDto.setHotel_rating("");
+                    registerDto.setHotel_secondary_email("");
+                    registerDto.setManager_added("");
+                    registerDto.setRoom_3h_first_checkin("");
+                    registerDto.setRoom_3h_last_checkin("");
+                    registerDto.setRoom_6h_first_checkin("");
+                    registerDto.setRoom_6h_last_checkin("");
+                    registerDto.setRoom_12h_first_checkin("");
+                    registerDto.setRooms_available("");
+                    registerDto.setRoom_12h_last_checkin("");
+                    registerDto.setRoom_rate_3_hour("");
+                    registerDto.setRoom_rate_6_hour("");
+                    registerDto.setRoom_rate_12_hour("");
+
                     dbRef.child(Constants.OXO_STAY_PARTNER).child("hotelstobeapproved").push().setValue(registerDto);
+                    dialog.dismiss();
+                    onBackPressed();
+                    finish();
 
                 }
                 else
                 {
                     Toast.makeText(getApplicationContext(), "Please fill all the fields and select all the documents required.", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                 }
 
             }
@@ -313,23 +349,23 @@ public class RegisterActivity extends AppCompatActivity {
                                     if(TextUtils.equals(docType, Constants.PAN_CARD))
                                     {
                                         registerDto.setPanCard(uri.toString());
+
                                     }
                                     if(TextUtils.equals(docType, Constants.GST_CERT))
                                     {
                                         registerDto.setGstCert(uri.toString());
                                     }
-                                    docType = null;
 
 //                                databaseReferenceproduct.setValue(uri.toString());
 
                                 }
                             });
 
+                            Toast.makeText(getApplicationContext(), "Uploaded "+docType, Toast.LENGTH_SHORT).show();
 
 //                        Log.e(TAG, "uploadImage: " + taskSnapshot.ge);
 
 
-                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
 
 
                         }
@@ -351,7 +387,31 @@ public class RegisterActivity extends AppCompatActivity {
                     }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if(TextUtils.equals(docType, Constants.AADHAAR))
+                    {
+                        btAadhaar.setBackgroundColor(Color.parseColor("#00FF00"));
+                        btAadhaar.setTextColor(Color.parseColor("#000000"));
+                        btAadhaar.setText("Aadhaar card uploaded");
+                        btAadhaar.setOnClickListener(null);
 
+                    }
+                    if(TextUtils.equals(docType, Constants.PAN_CARD))
+                    {
+                        btPanCard.setBackgroundColor(Color.parseColor("#00FF00"));
+                        btPanCard.setTextColor(Color.parseColor("#000000"));
+                        btPanCard.setText("PAN card uploaded");
+                        btPanCard.setOnClickListener(null);
+
+                    }
+                    if(TextUtils.equals(docType, Constants.GST_CERT))
+                    {
+                        btGstCertificate.setBackgroundColor(Color.parseColor("#00FF00"));
+                        btGstCertificate.setTextColor(Color.parseColor("#000000"));
+                        btGstCertificate.setText("GST Certificate uploaded");
+                        btGstCertificate.setOnClickListener(null);
+
+                    }
+//                    docType = null;
                 }
             });
         }
