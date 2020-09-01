@@ -59,4 +59,12 @@
     <string name="three_hours_rate">1119</string>
     <string name="six_hours">1400</string>
     <string name="twelve_hours">1800</string>
+
+    <!--Proifle-->
+    <string name="hotel_contact">Hotel Contact: </string>
+    <string name="manager_name">Manager Name: </string>
+    <string name="hotel_address">Hotel Address: </string>
+    <string name="hotel_email">Hotel Email: </string>
+    <string name="hotel_s_email">Hotel Secondary Email: </string>
+
 </resources>
