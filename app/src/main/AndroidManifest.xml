@@ -15,8 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ui.manageratesroom.ManageActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity android:name=".activities.ui.editprofileinfo.EditProfileInfo"></activity>
+        <activity
+            android:name=".activities.ui.manageratesroom.ManageActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activities.ui.register.RegisterActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -52,6 +54,7 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".activities.ui.profile.ProfileActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

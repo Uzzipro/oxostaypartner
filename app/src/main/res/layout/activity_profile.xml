@@ -212,13 +212,23 @@
                 android:textSize="@dimen/_15_dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_margin="@dimen/_20_dp"
             android:background="@color/colorBlack"/>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btEdit"
+            android:text="Edit information"
+            android:layout_marginHorizontal="@dimen/_50_dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/bt_style"
+            android:textAllCaps="false"/>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>

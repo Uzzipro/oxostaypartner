@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    tools:context=".activities.ui.profile.ProfileActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_size_default"
+        android:background="@color/colorBlack"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+            tools:ignore="VectorDrawableCompat" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/robotomedium"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_30_dp"
+            android:paddingLeft="@dimen/_30_dp"
+            android:text="Edit profile information"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/toolbar_title_size" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/toolbar_size_default"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:background="@drawable/activity_bg">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/tvHotelName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20_dp"
+                android:fontFamily="@font/robotomedium"
+                android:gravity="center"
+                android:text="Hotel Parth Inn"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_15_dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5_dp"
+                android:fontFamily="@font/robotoregular"
+                android:gravity="center"
+                android:text="R.k puran, Delhi"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_13_dp"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llHotelContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_20_dp"
+                android:layout_marginTop="@dimen/_20_dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotoregular"
+                    android:paddingHorizontal="@dimen/_5_dp"
+                    android:text="@string/hotel_contact"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvHotelContactNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotoregular"
+                    android:text="123-456-789"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llManagerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_20_dp"
+                android:layout_marginTop="@dimen/_2_dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotoregular"
+                    android:paddingHorizontal="@dimen/_5_dp"
+                    android:text="@string/manager_name"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvManagerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotoregular"
+                    android:text="Nitin Sharma"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llHotelAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_20_dp"
+                android:layout_marginTop="@dimen/_20_dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotoregular"
+                    android:paddingHorizontal="@dimen/_5_dp"
+                    android:text="@string/hotel_address"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvHotelAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/robotoregular"
+                    android:text="C-1, Hapur Rd, Block, Delhi"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_20_dp"
+                android:layout_marginTop="@dimen/_20_dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotoregular"
+                    android:paddingHorizontal="@dimen/_5_dp"
+                    android:text="@string/hotel_email"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvHotelEmailAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/robotoregular"
+                    android:text="hotelparthinn@gmail.com"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llSecondaryEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_20_dp"
+                android:layout_marginTop="@dimen/_2_dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotoregular"
+                    android:paddingHorizontal="@dimen/_5_dp"
+                    android:text="@string/hotel_s_email"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvHotelSecondaryEmailAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/robotoregular"
+                    android:text="HotelParthInnSupport@gmail.com"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_margin="@dimen/_20_dp"
+                android:background="@color/colorBlack"/>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btEdit"
+                android:text="Save"
+                android:layout_marginHorizontal="@dimen/_50_dp"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/bt_style"
+                android:textAllCaps="false"/>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

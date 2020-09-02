@@ -1,8 +1,16 @@
 package com.partner.oxostay.dtos;
 
 public class RegisterDto {
-    private String fullName, phNumber, address, aadhaarCard, panCard, gstCert, hotel_name, hotel_desc, hotel_pictures, hotel_address, hotel_rating, hotel_email, hotel_secondary_email, manager_added, rooms_available, room_rate_3_hour, room_rate_6_hour, room_rate_12_hour, room_3h_first_checkin, room_3h_last_checkin, room_6h_first_checkin, room_6h_last_checkin, room_12h_first_checkin, room_12h_last_checkin;
+    private String fullName, phNumber, address, aadhaarCard, panCard, gstCert, hotel_name, hotel_desc, hotel_pictures, hotel_address, hotel_rating, hotel_email, hotel_secondary_email, manager_added, rooms_available, room_rate_3_hour, room_rate_6_hour, room_rate_12_hour, room_3h_first_checkin, room_3h_last_checkin, room_6h_first_checkin, room_6h_last_checkin, room_12h_first_checkin, room_12h_last_checkin, fcm_token;
     private boolean approvedOrNot;
+
+    public String getFcm_token() {
+        return fcm_token;
+    }
+
+    public void setFcm_token(String fcm_token) {
+        this.fcm_token = fcm_token;
+    }
 
     public String getHotel_name() {
         return hotel_name;

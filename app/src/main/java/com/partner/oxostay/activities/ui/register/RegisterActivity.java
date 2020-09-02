@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -195,65 +196,84 @@ public class RegisterActivity extends AppCompatActivity {
         btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                dialog.show();
-//                if(registerDto.getFullName() != null && registerDto.getPhNumber() != null && registerDto.getAddress() != null
-//                && registerDto.getAadhaarCard() != null && registerDto.getPanCard() != null && registerDto.getGstCert() != null)
-//                {
-//                    registerDto.setApprovedOrNot(false);
-//                    registerDto.setHotel_address("");
-//                    registerDto.setHotel_desc("");
-//                    registerDto.setHotel_email("");
-//                    registerDto.setHotel_name("");
-//                    registerDto.setHotel_pictures("");
-//                    registerDto.setHotel_rating("");
-//                    registerDto.setHotel_secondary_email("");
-//                    registerDto.setManager_added("");
-//                    registerDto.setRoom_3h_first_checkin("");
-//                    registerDto.setRoom_3h_last_checkin("");
-//                    registerDto.setRoom_6h_first_checkin("");
-//                    registerDto.setRoom_6h_last_checkin("");
-//                    registerDto.setRoom_12h_first_checkin("");
-//                    registerDto.setRooms_available("");
-//                    registerDto.setRoom_12h_last_checkin("");
-//                    registerDto.setRoom_rate_3_hour("");
-//                    registerDto.setRoom_rate_6_hour("");
-//                    registerDto.setRoom_rate_12_hour("");
+                dialog.show();
+                if(registerDto.getFullName() != null && registerDto.getPhNumber() != null && registerDto.getAddress() != null
+                && registerDto.getAadhaarCard() != null && registerDto.getPanCard() != null && registerDto.getGstCert() != null)
+                {
+
+                    FirebaseInstanceId.getInstance().getInstanceId()
+                            .addOnCompleteListener(task -> {
+                                if (!task.isSuccessful()) {
+                                    Log.e(TAG, "getInstanceId failed", task.getException());
+                                    return;
+                                }
+                                else
+                                {
+                                    String token = task.getResult().getToken();
+                                    Log.e(TAG, "onComplete: "+token);
+                                    registerDto.setFcm_token(token);
+                                    registerDto.setApprovedOrNot(false);
+                                    registerDto.setHotel_address("");
+                                    registerDto.setHotel_desc("");
+                                    registerDto.setHotel_email("");
+                                    registerDto.setHotel_name("");
+                                    registerDto.setHotel_pictures("");
+                                    registerDto.setHotel_rating("");
+                                    registerDto.setHotel_secondary_email("");
+                                    registerDto.setManager_added("");
+                                    registerDto.setRoom_3h_first_checkin("");
+                                    registerDto.setRoom_3h_last_checkin("");
+                                    registerDto.setRoom_6h_first_checkin("");
+                                    registerDto.setRoom_6h_last_checkin("");
+                                    registerDto.setRoom_12h_first_checkin("");
+                                    registerDto.setRooms_available("");
+                                    registerDto.setRoom_12h_last_checkin("");
+                                    registerDto.setRoom_rate_3_hour("");
+                                    registerDto.setRoom_rate_6_hour("");
+                                    registerDto.setRoom_rate_12_hour("");
+
+                                    dbRef.child(Constants.OXO_STAY_PARTNER).child("hotelstobeapproved").push().setValue(registerDto);
+                                    dialog.dismiss();
+                                    onBackPressed();
+                                    finish();
+                                }
+
+                                // Get new Instance ID token
+
+
+
+                            });
+
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Please fill all the fields and select all the documents required.", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
 //
-//                    dbRef.child(Constants.OXO_STAY_PARTNER).child("hotelstobeapproved").push().setValue(registerDto);
-//                    dialog.dismiss();
-//                    onBackPressed();
-//                    finish();
+
+//                SendNotificationModel sendNotificationModel = new SendNotificationModel("New Hotel Added", "New Hotel Added");
+//                RequestNotification requestNotificaton = new RequestNotification();
+//                requestNotificaton.setSendNotificationModel(sendNotificationModel);
+//                //token is id , whom you want to send notification ,
+//                requestNotificaton.setToken("ca9Nbi6OTwKfP0Cy2LR13Y:APA91bFU6yk7JeWKD4yFTN3t0eCqO7wVkgSUbYqes11I4bucovDE9lAnyCRw5s9uEaVCWtbQr5v22OLcjf7PWzBWqpf3gcHfX3Bq8DPdKpRXXO2UeBMvOuzjLOZ6SuXNchCtsO31InFF");
 //
-//                }
-//                else
-//                {
-//                    Toast.makeText(getApplicationContext(), "Please fill all the fields and select all the documents required.", Toast.LENGTH_SHORT).show();
-//                    dialog.dismiss();
-//                }
+//                apiService =  ApiClient.getClient().create(ApiService.class);
+//                retrofit2.Call<ResponseBody> responseBodyCall = apiService.sendChatNotification(requestNotificaton);
 //
-
-                SendNotificationModel sendNotificationModel = new SendNotificationModel("New Hotel Added", "New Hotel Added");
-                RequestNotification requestNotificaton = new RequestNotification();
-                requestNotificaton.setSendNotificationModel(sendNotificationModel);
-                //token is id , whom you want to send notification ,
-                requestNotificaton.setToken("ca9Nbi6OTwKfP0Cy2LR13Y:APA91bFU6yk7JeWKD4yFTN3t0eCqO7wVkgSUbYqes11I4bucovDE9lAnyCRw5s9uEaVCWtbQr5v22OLcjf7PWzBWqpf3gcHfX3Bq8DPdKpRXXO2UeBMvOuzjLOZ6SuXNchCtsO31InFF");
-
-                apiService =  ApiClient.getClient().create(ApiService.class);
-                retrofit2.Call<ResponseBody> responseBodyCall = apiService.sendChatNotification(requestNotificaton);
-
-                responseBodyCall.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                        Log.d("kkkk",""+call);
-                    }
-
-                    @Override
-                    public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
-                        Log.d("kkkk",""+call);
-
-
-                    }
-                });
+//                responseBodyCall.enqueue(new Callback<ResponseBody>() {
+//                    @Override
+//                    public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+//                        Log.d("kkkk",""+call);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+//                        Log.d("kkkk",""+call);
+//
+//
+//                    }
+//                });
 
             }
         });
