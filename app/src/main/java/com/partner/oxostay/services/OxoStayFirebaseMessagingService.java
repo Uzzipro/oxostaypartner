@@ -83,8 +83,9 @@ public class OxoStayFirebaseMessagingService extends FirebaseMessagingService {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "0")
                     .setSmallIcon(R.drawable.ic_wifi)
                     .setContentTitle(remoteMessage.getNotification().getTitle())
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(remoteMessage.getNotification().getBody()))
                     .setContentText(remoteMessage.getNotification().getBody())
-                    .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                     .setPriority(NotificationCompat.PRIORITY_HIGH);
 //                    .setContentIntent(p);
 

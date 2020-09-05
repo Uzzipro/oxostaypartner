@@ -34,6 +34,7 @@
 
         <item
             android:id="@+id/nav_change_password"
+            android:visible="false"
             android:icon="@drawable/ic_changepassword"
             android:title="@string/menu_change_password" />
 

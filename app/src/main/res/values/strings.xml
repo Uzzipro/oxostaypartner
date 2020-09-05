@@ -10,6 +10,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="mobile_number">Mobile no.</string>
+    <string name="user_name">User name</string>
     <string name="not_registered">Not Registered yet? Sign up here</string>
     <string name="title_activity_nav_home">NavHomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -60,11 +61,15 @@
     <string name="six_hours">1400</string>
     <string name="twelve_hours">1800</string>
 
-    <!--Proifle-->
+    <!--Profile-->
     <string name="hotel_contact">Hotel Contact: </string>
     <string name="manager_name">Manager Name: </string>
     <string name="hotel_address">Hotel Address: </string>
     <string name="hotel_email">Hotel Email: </string>
     <string name="hotel_s_email">Hotel Secondary Email: </string>
+
+    <!--Register-->
+    <string name="register_success">Thank you for registering with OXO Stay. Your request to add your hotel has been sent to the admin for approval. Please do not uninstall the application till we approve or decline your request for the same.</string>
+
 
 </resources>

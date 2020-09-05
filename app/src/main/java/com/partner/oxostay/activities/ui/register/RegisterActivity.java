@@ -1,19 +1,25 @@
 package com.partner.oxostay.activities.ui.register;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -74,6 +80,8 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference dbRef;
     private ACProgressFlower dialog;
     private ApiService apiService;
+    private AlertDialog registerSuccessDialog;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -193,63 +201,69 @@ public class RegisterActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        btSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.show();
-                if(registerDto.getFullName() != null && registerDto.getPhNumber() != null && registerDto.getAddress() != null
-                && registerDto.getAadhaarCard() != null && registerDto.getPanCard() != null && registerDto.getGstCert() != null)
-                {
+        btSubmit.setOnClickListener(v -> {
+            dialog.show();
+            progressDialog.show();
+            if(registerDto.getFullName() != null && registerDto.getPhNumber() != null && registerDto.getAddress() != null
+            && registerDto.getAadhaarCard() != null && registerDto.getPanCard() != null && registerDto.getGstCert() != null)
+            {
 
-                    FirebaseInstanceId.getInstance().getInstanceId()
-                            .addOnCompleteListener(task -> {
-                                if (!task.isSuccessful()) {
-                                    Log.e(TAG, "getInstanceId failed", task.getException());
-                                    return;
-                                }
-                                else
-                                {
-                                    String token = task.getResult().getToken();
-                                    Log.e(TAG, "onComplete: "+token);
-                                    registerDto.setFcm_token(token);
-                                    registerDto.setApprovedOrNot(false);
-                                    registerDto.setHotel_address("");
-                                    registerDto.setHotel_desc("");
-                                    registerDto.setHotel_email("");
-                                    registerDto.setHotel_name("");
-                                    registerDto.setHotel_pictures("");
-                                    registerDto.setHotel_rating("");
-                                    registerDto.setHotel_secondary_email("");
-                                    registerDto.setManager_added("");
-                                    registerDto.setRoom_3h_first_checkin("");
-                                    registerDto.setRoom_3h_last_checkin("");
-                                    registerDto.setRoom_6h_first_checkin("");
-                                    registerDto.setRoom_6h_last_checkin("");
-                                    registerDto.setRoom_12h_first_checkin("");
-                                    registerDto.setRooms_available("");
-                                    registerDto.setRoom_12h_last_checkin("");
-                                    registerDto.setRoom_rate_3_hour("");
-                                    registerDto.setRoom_rate_6_hour("");
-                                    registerDto.setRoom_rate_12_hour("");
+                FirebaseInstanceId.getInstance().getInstanceId()
+                        .addOnCompleteListener(task -> {
+                            if (!task.isSuccessful()) {
+                                Log.e(TAG, "getInstanceId failed", task.getException());
+                                return;
+                            }
+                            else
+                            {
+                                String token = task.getResult().getToken();
+                                Log.e(TAG, "onComplete: "+token);
+                                registerDto.setFcm_token(token);
+                                registerDto.setApprovedOrNot(false);
+                                registerDto.setHotel_address("");
+                                registerDto.setHotel_desc("");
+                                registerDto.setHotel_email("");
+                                registerDto.setHotel_name("");
+                                registerDto.setHotel_pictures("");
+                                registerDto.setHotel_rating("");
+                                registerDto.setHotel_secondary_email("");
+                                registerDto.setManager_added("");
+                                registerDto.setRoom_3h_first_checkin("");
+                                registerDto.setRoom_3h_last_checkin("");
+                                registerDto.setRoom_6h_first_checkin("");
+                                registerDto.setRoom_6h_last_checkin("");
+                                registerDto.setRoom_12h_first_checkin("");
+                                registerDto.setRooms_available("");
+                                registerDto.setRoom_12h_last_checkin("");
+                                registerDto.setRoom_rate_3_hour("");
+                                registerDto.setRoom_rate_6_hour("");
+                                registerDto.setRoom_rate_12_hour("");
+                                registerDto.setDate_from("");
+                                registerDto.setDate_to("");
 
-                                    dbRef.child(Constants.OXO_STAY_PARTNER).child("hotelstobeapproved").push().setValue(registerDto);
-                                    dialog.dismiss();
-                                    onBackPressed();
-                                    finish();
-                                }
+                                dbRef.child(Constants.OXO_STAY_PARTNER).child("hotelstobeapproved").push().setValue(registerDto);
+                                dialog.dismiss();
+//                                    onBackPressed();
+//                                    finish();
+                                registerSuccess();
+                                etFullname.getText().clear();
+                                etAddress.getText().clear();
+                                etPhNumber.getText().clear();
 
-                                // Get new Instance ID token
+                            }
+
+                            // Get new Instance ID token
 
 
 
-                            });
+                        });
 
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(), "Please fill all the fields and select all the documents required.", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                }
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Please fill all the fields and select all the documents required.", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
 //
 
 //                SendNotificationModel sendNotificationModel = new SendNotificationModel("New Hotel Added", "New Hotel Added");
@@ -275,8 +289,12 @@ public class RegisterActivity extends AppCompatActivity {
 //                    }
 //                });
 
-            }
+            progressDialog.dismiss();
         });
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Sending information");
+        progressDialog.setCancelable(false);
     }
 
     public static boolean hasPermissions(Context context, String... permissions) {
@@ -288,6 +306,35 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+
+    private void registerSuccess()
+    {
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View enterPinCodeView = factory.inflate(R.layout.registration_success, null);
+        registerSuccessDialog = new AlertDialog.Builder(this).create();
+        Window window = registerSuccessDialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.BOTTOM;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        wlp.windowAnimations = R.style.DialogAnimation;
+        window.setAttributes(wlp);
+        registerSuccessDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        registerSuccessDialog.setView(enterPinCodeView);
+        registerSuccessDialog.show();
+
+        Button dismiss = registerSuccessDialog.findViewById(R.id.btDissmiss);
+
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                registerSuccessDialog.dismiss();
+                finish();
+
+            }
+        });
     }
 
     @Override

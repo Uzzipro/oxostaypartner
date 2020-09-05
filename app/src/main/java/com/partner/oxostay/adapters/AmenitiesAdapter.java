@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -20,9 +19,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.partner.oxostay.R;
 import com.partner.oxostay.dtos.AmenetiesDto;
+import com.partner.oxostay.dtos.RegisterDto;
 import com.partner.oxostay.utils.Constants;
 
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class AmenitiesAdapter extends RecyclerView.Adapter<AmenitiesAdapter.MyViewHolder> {
 
@@ -32,6 +34,7 @@ public class AmenitiesAdapter extends RecyclerView.Adapter<AmenitiesAdapter.MyVi
     private LayoutInflater inflater;
     private int amenitiesImage[];
     private DatabaseReference dbRef;
+//    private ArrayList<String> amenitiesSelected;
 
 
     public AmenitiesAdapter(Context mContext, List<AmenetiesDto> cardinfoList) {
@@ -57,78 +60,88 @@ public class AmenitiesAdapter extends RecyclerView.Adapter<AmenitiesAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         final AmenetiesDto cardData = cardinfoList.get(position);
-
-        dbRef = FirebaseDatabase.getInstance().getReference().child(Constants.OXO_STAY_PARTNER).child("amenities");
+        String hotel_id = context.getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).getString(
+                Constants.HOTEL_ID, "notfound");
+        dbRef = FirebaseDatabase.getInstance().getReference().child(Constants.OXO_STAY_PARTNER).child(Constants.HOTELS_APPROVED_KEY).child(hotel_id);
         holder.amenitiesLabel.setText(cardData.getAmenetiesLabel());
         holder.amenitiesImage.setImageResource(cardData.getAmenitiesImage());
 
-//        dbRef.orderByChild("amenetiesLabel").equalTo(cardData.getAmenetiesLabel()).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot != null)
-//                {
-//
-//                }
-//                else
-//                {
-//                    holder.rbNo.setChecked(true);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
-        holder.rbYes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        dbRef.child("amenities").orderByChild("amenetiesLabel").equalTo(cardData.getAmenetiesLabel()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    holder.rbNo.setChecked(false);
-                    AmenetiesDto a = new AmenetiesDto();
-                    a.setAmenetiesLabel(cardData.getAmenetiesLabel());
-                    dbRef.push().setValue(a);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        AmenetiesDto amenetiesDto = dataSnapshot1.getValue(AmenetiesDto.class);
+                        Log.e(TAG, "onDataChange: " + amenetiesDto.getAmenetiesLabel());
+                        if (cardData.getAmenetiesLabel().equals(amenetiesDto.getAmenetiesLabel())) {
+                            holder.rbYes.setChecked(true);
 
+                        } else {
+                            holder.rbNo.setChecked(true);
+
+                        }
+
+                    }
+                } else {
                 }
+                setupViews(holder, cardData);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
-        holder.rbNo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    holder.rbYes.setChecked(false);
+
+    }
+
+    private void setupViews(MyViewHolder holder, AmenetiesDto cardData) {
+        holder.rbYes.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                holder.rbNo.setChecked(false);
+                AmenetiesDto a = new AmenetiesDto();
+                a.setAmenetiesLabel(cardData.getAmenetiesLabel());
+                RegisterDto s = new RegisterDto();
+                s.setAmenetiesDto(a);
+                dbRef.child("amenities").push().setValue(a);
+//                    amenitiesSelected.add(setAmen
+
+            }
+
+        });
+
+        holder.rbNo.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                holder.rbYes.setChecked(false);
 //                    AmenetiesDto a = new AmenetiesDto();
 //                    a.setAmenetiesLabel(cardData.getAmenetiesLabel());
 //                    dbRef.push().setValue(a);
 
-                    dbRef.orderByChild(cardData.getAmenetiesLabel()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot != null) {
-                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                    AmenetiesDto a = dataSnapshot1.getValue(AmenetiesDto.class);
+                dbRef.child("amenities").orderByChild("amenetiesLabel").equalTo(cardData.getAmenetiesLabel()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot != null) {
+                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                AmenetiesDto a = dataSnapshot1.getValue(AmenetiesDto.class);
 //                                    Log.e(TAG, "onDataChange: "+a.getAmenetiesLabel());
-                                    if (cardData.getAmenetiesLabel().equals(a.getAmenetiesLabel())) {
-                                        Log.e(TAG, "onDataChange: " + dataSnapshot1.getKey());
-                                        dbRef.child(dataSnapshot1.getKey()).removeValue();
-                                    }
+                                if (cardData.getAmenetiesLabel().equals(a.getAmenetiesLabel())) {
+                                    Log.e(TAG, "onDataChange: " + dataSnapshot1.getKey());
+                                    dbRef.child("amenities").child(dataSnapshot1.getKey()).removeValue();
                                 }
                             }
-
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
 
-                        }
-                    });
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                    }
+                });
             }
+
         });
     }
 
@@ -150,6 +163,7 @@ public class AmenitiesAdapter extends RecyclerView.Adapter<AmenitiesAdapter.MyVi
             amenitiesImage = view.findViewById(R.id.ivAmenities);
             rbYes = view.findViewById(R.id.rbParkingYes);
             rbNo = view.findViewById(R.id.rbParkingno);
+//            amenitiesSelected = new ArrayList<>();
 
         }
     }

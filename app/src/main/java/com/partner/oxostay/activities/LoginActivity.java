@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 passwordstr = etPassword.getText().toString().trim();
 
                 if (!TextUtils.isEmpty(phNumberstr) && !TextUtils.isEmpty(passwordstr)) {
-                    dbRefLogin.orderByChild("phNumber").equalTo(phNumberstr).addListenerForSingleValueEvent(new ValueEventListener() {
+                    dbRefLogin.orderByChild("username").equalTo(phNumberstr).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.hasChildren()) {

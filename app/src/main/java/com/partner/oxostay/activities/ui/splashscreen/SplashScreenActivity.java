@@ -42,11 +42,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         {
             Intent n = new Intent(SplashScreenActivity.this, NavHomeActivity.class);
             startActivity(n);
+            finish();
         }
         else
         {
             Intent n = new Intent(SplashScreenActivity.this, LoginActivity.class);
             startActivity(n);
+            finish();
         }
 
 

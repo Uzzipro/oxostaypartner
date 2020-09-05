@@ -48,12 +48,12 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvChooseToFrom"
+            android:id="@+id/tvDateFrom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/robotomedium"
             android:textColor="@color/colorBlack"
-            android:text="@string/choose_from"
+            android:text="Choose From and To"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorBlack"
             android:background="@drawable/etstyle2"
-            android:visibility="gone"
+            android:visibility="visible"
             android:padding="@dimen/_5_dp"
             android:layout_marginTop="@dimen/_10_dp"
             android:id="@+id/etTo"/>
@@ -137,8 +137,6 @@
                 android:layout_marginTop="@dimen/_10_dp"
                 android:id="@+id/et12Hours"/>
 
-
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -163,6 +161,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:background="#0A000000"
+                android:padding="@dimen/_5_dp"
                 android:layout_marginTop="@dimen/_20_dp"
                 android:id="@+id/ll3HoursFirstCheck">
 
@@ -186,6 +186,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:background="#0A000000"
+                android:padding="@dimen/_5_dp"
                 android:layout_marginTop="@dimen/_5_dp"
                 android:id="@+id/ll3HoursLastCheck">
 
@@ -209,6 +211,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:background="#0A000000"
+                android:padding="@dimen/_5_dp"
                 android:layout_marginTop="@dimen/_20_dp"
                 android:id="@+id/ll6HoursFirstCheck">
 
@@ -231,6 +235,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:background="#0A000000"
+                android:padding="@dimen/_5_dp"
                 android:layout_marginTop="@dimen/_5_dp"
                 android:id="@+id/ll6HoursLastCheck">
 
@@ -256,6 +262,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="@dimen/_20_dp"
+                android:background="#0A000000"
+                android:padding="@dimen/_5_dp"
                 android:id="@+id/ll12HoursFirstCheck">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -278,6 +286,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:background="#0A000000"
+                android:padding="@dimen/_5_dp"
                 android:layout_marginTop="@dimen/_5_dp"
                 android:id="@+id/ll12HoursLastCheck">
 
@@ -301,6 +311,31 @@
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btViewData"
+            android:text="View Dates and more"
+            android:layout_marginHorizontal="@dimen/_50_dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/bt_style"
+            android:textAllCaps="false"/>
+
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20_dp"
+            android:id="@+id/btSaveChanges"
+            android:text="Save"
+            android:layout_marginBottom="70dp"
+            android:layout_marginHorizontal="@dimen/_50_dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/bt_style"
+            android:textAllCaps="false"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     </ScrollView>

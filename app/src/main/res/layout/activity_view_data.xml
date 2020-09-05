@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".activities.ui.viewdata.ViewDataActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_size_default"
+        android:background="@color/colorBlack"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="26dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+            tools:ignore="VectorDrawableCompat" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/robotomedium"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_30_dp"
+            android:paddingLeft="@dimen/_30_dp"
+            android:text="View Data"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/toolbar_title_size" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_20_dp"
+            android:layout_marginHorizontal="@dimen/_20_dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotomedium"
+                android:textColor="@color/colorBlack"
+                android:text="From Date"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:layout_height="wrap_content"
+                    android:id="@+id/tvDateFrom"
+                android:textColor="@color/colorBlack"
+                android:padding="@dimen/_5_dp"
+                android:background="@drawable/etstyle2"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotomedium"
+                android:layout_marginTop="@dimen/_20_dp"
+                android:textColor="@color/colorBlack"
+                android:text="To Date"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/etstyle2"
+                android:visibility="visible"
+                android:padding="@dimen/_5_dp"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:id="@+id/tvDateTo" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10_dp"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotomedium"
+                    android:text="3 Hours"
+                    android:textColor="@color/colorBlack"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:background="@drawable/etstyle2"
+                    android:padding="@dimen/_5_dp"
+                    android:textSize="@dimen/_15_dp"
+                    android:text="@string/three_hours_rate"
+                    android:layout_marginTop="@dimen/_10_dp"
+                    android:id="@+id/et3Hours"/>
+
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotomedium"
+                    android:text="6 Hours"
+                    android:layout_marginTop="@dimen/_20_dp"
+                    android:textColor="@color/colorBlack"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp"
+                    android:background="@drawable/etstyle2"
+                    android:padding="@dimen/_5_dp"
+                    android:text="@string/six_hours"
+                    android:layout_marginTop="@dimen/_10_dp"
+                    android:id="@+id/et6Hours"/>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotomedium"
+                    android:text="12 Hours"
+                    android:layout_marginTop="@dimen/_20_dp"
+                    android:textColor="@color/colorBlack"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp"
+                    android:background="@drawable/etstyle2"
+                    android:padding="@dimen/_5_dp"
+                    android:text="@string/twelve_hours"
+                    android:layout_marginTop="@dimen/_10_dp"
+                    android:id="@+id/et12Hours"/>
+
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/robotomedium"
+                    android:text="Room available"
+                    android:layout_marginTop="@dimen/_20_dp"
+                    android:textColor="@color/colorBlack"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_15_dp"
+                    android:background="@drawable/etstyle2"
+                    android:padding="@dimen/_5_dp"
+                    android:text="6"
+                    android:layout_marginTop="@dimen/_10_dp"
+                    android:id="@+id/etRoomsAvailable"/>
+
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_20_dp"
+                    android:id="@+id/ll3HoursFirstCheck">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3 Hours(First Check-In)"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotomedium"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv3HoursFirstcheck"
+                        android:text="9:00AM"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotoregular"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_5_dp"
+                    android:id="@+id/ll3HoursLastCheck">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3 Hours(Last Check-In)"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotomedium"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv3HoursLastcheck"
+                        android:text="9:00AM"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotoregular"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_20_dp"
+                    android:id="@+id/ll6HoursFirstCheck">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="6 Hours(First Check-In)"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotomedium"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv6HoursFirstcheck"
+                        android:text="9:00AM"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotoregular"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_5_dp"
+                    android:id="@+id/ll6HoursLastCheck">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="6 Hours(Last Check-In)"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotomedium"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv6HoursLastcheck"
+                        android:text="9:00AM"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotoregular"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_20_dp"
+                    android:id="@+id/ll12HoursFirstCheck">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="12 Hours(First Check-In)"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotomedium"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv12HoursFirstcheck"
+                        android:text="9:00AM"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotoregular"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_5_dp"
+                    android:id="@+id/ll12HoursLastCheck">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="12 Hours(Last Check-In)"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotomedium"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv12HoursLastcheck"
+                        android:text="9:00AM"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/robotoregular"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btViewData"
+                android:text="View Dates and more"
+                android:visibility="gone"
+                android:layout_marginHorizontal="@dimen/_50_dp"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/bt_style"
+                android:textAllCaps="false"/>
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20_dp"
+                android:id="@+id/btSaveChanges"
+                android:text="Save"
+                android:visibility="gone"
+                android:layout_marginBottom="70dp"
+                android:layout_marginHorizontal="@dimen/_50_dp"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/bt_style"
+                android:textAllCaps="false"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

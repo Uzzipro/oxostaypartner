@@ -1,9 +1,12 @@
 package com.partner.oxostay.activities.ui.amenities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,7 +26,9 @@ public class AmenitiesActivity extends AppCompatActivity {
     private RecyclerView rvAmeneties;
     private List<AmenetiesDto> amenitiesLabellist;
     private AmenitiesAdapter amenitiesAdapter;
-    private ImageView ivBack;
+    private ImageView ivBack, ivSave;
+    private ProgressDialog progressDialog;
+
 
 
     @Override
@@ -34,23 +39,28 @@ public class AmenitiesActivity extends AppCompatActivity {
 
     }
 
-
     private void setUpViews() {
+
         rvAmeneties = findViewById(R.id.rvAmeneties);
+        ivSave = findViewById(R.id.ivSave);
         ivBack = findViewById(R.id.ivBack);
         amenitiesLabellist = new ArrayList<>();
         amenitiesAdapter = new AmenitiesAdapter(this, amenitiesLabellist);
         rvAmeneties.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvAmeneties.setAdapter(amenitiesAdapter);
+
+        ivBack.setOnClickListener(v -> onBackPressed());
+        ivSave.setOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(), "Amenities Saved", Toast.LENGTH_LONG).show();
+            finish();
+
+        });
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Sending information");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         setData();
 
-
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
     }
 
     private void setData() {
@@ -63,6 +73,7 @@ public class AmenitiesActivity extends AppCompatActivity {
             amenetiesDto.setAmenitiesImage(amenitiesImage[p]);
             amenitiesLabellist.add(amenetiesDto);
             amenitiesAdapter.notifyDataSetChanged();
+            progressDialog.dismiss();
 
         }
     }

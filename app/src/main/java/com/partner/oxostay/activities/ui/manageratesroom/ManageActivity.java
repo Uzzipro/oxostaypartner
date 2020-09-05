@@ -2,25 +2,36 @@ package com.partner.oxostay.activities.ui.manageratesroom;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.partner.oxostay.R;
+import com.partner.oxostay.activities.ui.viewdata.ViewDataActivity;
+import com.partner.oxostay.utils.Constants;
 
 import java.util.Calendar;
 import java.util.Locale;
 
 public class ManageActivity extends AppCompatActivity {
+    private static final String TAG = "ManageActivity";
     private ImageView ivBack;
     private TextView etFrom, etTo, tv3HoursFirstcheck, tv3HoursLastcheck, tv6HoursFirstcheck, tv6Hourslastcheck, tv12HoursFirstcheck, tv12HoursLastcheck;
     private LinearLayoutCompat ll3HoursFirstCheck, ll3HoursLastCheck, ll6HoursFirstCheck, ll6HoursLastCheck, ll12HoursFirstCheck, ll12HoursLastCheck;
+    private Button btSaveChanges, btViewData;
+    private DatabaseReference dbRef;
+    private String strDateFrom, strDateTo, three_h_price, six_h_price, twelve_h_price, rooms_available, three_h_first_checkin, three_h_last_checkin, six_h_first_checkin, six_h_last_checkin, twelve_h_first_checkin, twelve_h_last_checkin, hotel_id;
+    private EditText et3Hours, et6Hours, et12Hours, etRoomsAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +44,17 @@ public class ManageActivity extends AppCompatActivity {
         /**XML Components*/
         ivBack = findViewById(R.id.ivBack);
         etFrom = findViewById(R.id.etFrom);
+        etTo = findViewById(R.id.etTo);
+        btViewData = findViewById(R.id.btViewData);
+        btViewData = findViewById(R.id.btViewData);
+        btSaveChanges = findViewById(R.id.btSaveChanges);
+        et3Hours = findViewById(R.id.et3Hours);
+        et6Hours = findViewById(R.id.et6Hours);
+        et12Hours = findViewById(R.id.et12Hours);
+        etRoomsAvailable = findViewById(R.id.etRoomsAvailable);
         etFrom.setText("Select Date");
+        etTo.setText("Select Date");
+        dbRef = FirebaseDatabase.getInstance().getReference(Constants.OXO_STAY_PARTNER);
 
         //3 hours First checkin
         tv3HoursFirstcheck = findViewById(R.id.tv3HoursFirstcheck);
@@ -63,211 +84,179 @@ public class ManageActivity extends AppCompatActivity {
         final Calendar myCalendar = Calendar.getInstance();
 
         /**OnClicks*/
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
+        ivBack.setOnClickListener(v -> onBackPressed());
 
-            }
-        });
+        final DatePickerDialog.OnDateSetListener date2 = (view, year, monthOfYear, dayOfMonth) -> {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            String month = myCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
 
-        final DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String month = myCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-
-                etTo.setText(month + " " + dayOfMonth + "," + " " + year);
-            }
-
+            etTo.setText(month + " " + dayOfMonth + "," + " " + year);
         };
 
 
-//        etTo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new DatePickerDialog(ManageActivity.this, date2, myCalendar
-//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-//            }
-//        });
-//
-//
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        etTo.setOnClickListener(v -> new DatePickerDialog(ManageActivity.this, date2, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show());
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String month = myCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
 
-                etFrom.setText(month + " " + dayOfMonth + "," + " " + year);
-            }
+        final DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            String month = myCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
 
+            etFrom.setText(month + " " + dayOfMonth + "," + " " + year);
         };
-        etFrom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(ManageActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
+        etFrom.setOnClickListener(v -> new DatePickerDialog(ManageActivity.this, date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show());
+
+        ll3HoursFirstCheck.setOnClickListener(v -> {
+            // TODO Auto-generated method stub
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
+                if (Integer.toString(selectedMinute).length() == 1) {
+                    tv3HoursFirstcheck.setText(selectedHour + ":" + "0" + selectedMinute);
+                } else {
+                    tv3HoursFirstcheck.setText(selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
+
         });
 
 
-        ll3HoursFirstCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(ManageActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        if (Integer.toString(selectedMinute).length() == 1) {
-                            tv3HoursFirstcheck.setText(selectedHour + ":"  + "0" + selectedMinute);
-                        } else {
-                            tv3HoursFirstcheck.setText(selectedHour + ":" + selectedMinute);
-                        }
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+        ll3HoursLastCheck.setOnClickListener(v -> {
+            // TODO Auto-generated method stub
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
+                if (Integer.toString(selectedMinute).length() == 1) {
+                    tv3HoursLastcheck.setText(selectedHour + ":" + "0" + selectedMinute);
+                } else {
+                    tv3HoursLastcheck.setText(selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
 
-            }
         });
 
+        ll6HoursFirstCheck.setOnClickListener(v -> {
+            // TODO Auto-generated method stub
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
+                if (Integer.toString(selectedMinute).length() == 1) {
+                    tv6HoursFirstcheck.setText(selectedHour + ":" + "0" + selectedMinute);
+                } else {
+                    tv6HoursFirstcheck.setText(selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
 
-        ll3HoursLastCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(ManageActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        if (Integer.toString(selectedMinute).length() == 1) {
-                            tv3HoursLastcheck.setText(selectedHour + ":"  + "0" + selectedMinute);
-                        } else {
-                            tv3HoursLastcheck.setText(selectedHour + ":" + selectedMinute);
-                        }
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-
-            }
         });
 
-        ll6HoursFirstCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(ManageActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        if (Integer.toString(selectedMinute).length() == 1) {
-                            tv6HoursFirstcheck.setText(selectedHour + ":"  + "0" + selectedMinute);
-                        } else {
-                            tv6HoursFirstcheck.setText(selectedHour + ":" + selectedMinute);
-                        }
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+        ll6HoursLastCheck.setOnClickListener(v -> {
+            // TODO Auto-generated method stub
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
+                if (Integer.toString(selectedMinute).length() == 1) {
+                    tv6Hourslastcheck.setText(selectedHour + ":" + "0" + selectedMinute);
+                } else {
+                    tv6Hourslastcheck.setText(selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
 
-            }
         });
 
-        ll6HoursLastCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(ManageActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        if (Integer.toString(selectedMinute).length() == 1) {
-                            tv6Hourslastcheck.setText(selectedHour + ":"  + "0" + selectedMinute);
-                        } else {
-                            tv6Hourslastcheck.setText(selectedHour + ":" + selectedMinute);
-                        }
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+        ll12HoursFirstCheck.setOnClickListener(v -> {
+            // TODO Auto-generated method stub
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
+                if (Integer.toString(selectedMinute).length() == 1) {
+                    tv12HoursFirstcheck.setText(selectedHour + ":" + "0" + selectedMinute);
+                } else {
+                    tv12HoursFirstcheck.setText(selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
 
-            }
         });
 
-        ll12HoursFirstCheck.setOnClickListener(new View.OnClickListener() {
+        ll12HoursLastCheck.setOnClickListener(v -> {
+            // TODO Auto-generated method stub
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
+                if (Integer.toString(selectedMinute).length() == 1) {
+                    tv12HoursLastcheck.setText(selectedHour + ":" + "0" + selectedMinute);
+                } else {
+                    tv12HoursLastcheck.setText(selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
+
+        });
+
+        hotel_id = this.getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).getString(
+                Constants.HOTEL_ID, "notfound");
+        btSaveChanges.setOnClickListener(v -> saveChanges());
+        btViewData.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(ManageActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        if (Integer.toString(selectedMinute).length() == 1) {
-                            tv12HoursFirstcheck.setText(selectedHour + ":"  + "0" + selectedMinute);
-                        } else {
-                            tv12HoursFirstcheck.setText(selectedHour + ":" + selectedMinute);
-                        }
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+                Intent n = new Intent(ManageActivity.this, ViewDataActivity.class);
+                startActivity(n);
 
             }
         });
 
-        ll12HoursLastCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(ManageActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        if (Integer.toString(selectedMinute).length() == 1) {
-                            tv12HoursLastcheck.setText(selectedHour + ":"  + "0" + selectedMinute);
-                        } else {
-                            tv12HoursLastcheck.setText(selectedHour + ":" + selectedMinute);
-                        }
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+    }
 
-            }
-        });
+    private void saveChanges() {
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("room_rate_3_hour").setValue(et3Hours.getText().toString().trim());
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("room_rate_6_hour").setValue(et6Hours.getText().toString().trim());
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("room_rate_12_hour").setValue(et12Hours.getText().toString().trim());
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("rooms_available").setValue(etRoomsAvailable.getText().toString().trim());
 
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("date_from").setValue(etFrom.getText().toString().trim());
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("date_to").setValue(etTo.getText().toString().trim());
+
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("room_3h_first_checkin").setValue(tv3HoursFirstcheck.getText().toString().trim());
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("room_3h_last_checkin").setValue(tv3HoursLastcheck.getText().toString().trim());
+
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("room_6h_first_checkin").setValue(tv6HoursFirstcheck.getText().toString().trim());
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("room_6h_last_checkin").setValue(tv6Hourslastcheck.getText().toString().trim());
+
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("room_12h_first_checkin").setValue(tv12HoursFirstcheck.getText().toString().trim());
+        dbRef.child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("room_12h_last_checkin").setValue(tv12HoursFirstcheck.getText().toString().trim());
+
+        finish();
 
 
     }

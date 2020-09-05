@@ -15,7 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ui.editprofileinfo.EditProfileInfo"></activity>
+        <activity android:name=".activities.ui.viewdata.ViewDataActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity
+            android:name=".activities.ui.editprofileinfo.EditProfileInfo"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activities.ui.manageratesroom.ManageActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
