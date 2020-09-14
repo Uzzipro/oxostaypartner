@@ -29,8 +29,6 @@ public class AmenitiesActivity extends AppCompatActivity {
     private ImageView ivBack, ivSave;
     private ProgressDialog progressDialog;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

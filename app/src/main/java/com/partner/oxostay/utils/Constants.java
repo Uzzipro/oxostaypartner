@@ -4,6 +4,12 @@ public class Constants {
     public static final String OXO_STAY_PARTNER = "oxostaypartner";
     public static final String HOTELS_APPROVED_KEY = "hotelsapproved";
 
+    public static final String HOTEL_IMG_1 = "hotel_img_1";
+    public static final String HOTEL_IMG_2 = "hotel_img_2";
+    public static final String HOTEL_IMG_3 = "hotel_img_3";
+    public static final String HOTEL_IMG_4 = "hotel_img_4";
+    public static final String HOTEL_IMG_5 = "hotel_img_5";
+
     /** Access prefs **/
     public static final String ACCESS_PREFS = "access_prefs";
     public static final String LOGGED_IN = "logged_in";

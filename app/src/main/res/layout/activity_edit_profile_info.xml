@@ -172,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:fontFamily="@font/robotoregular"
-                    android:hint="Hotel contact number"
+                    android:hint="Hotel address"
                     android:textColorHint="@color/colorGrey"                    android:backgroundTint="@color/colorBlack"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_15_dp" />
@@ -202,7 +202,7 @@
                     android:textStyle="bold"
                     android:fontFamily="@font/robotoregular"
                     android:backgroundTint="@color/colorBlack"
-                    android:hint="Hotel contact number"
+                    android:hint="Hotel Email address"
                     android:textColorHint="@color/colorGrey"                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_15_dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -233,11 +233,19 @@
                     android:textStyle="bold"
                     android:fontFamily="@font/robotoregular"
                     android:backgroundTint="@color/colorBlack"
-                    android:hint="Hotel contact number"
+                    android:hint="Hotel secondary email address"
                     android:textColorHint="@color/colorGrey"                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_15_dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
-
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btLongLat"
+                android:text="Select pin point location"
+                android:layout_marginHorizontal="@dimen/_50_dp"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/bt_style"
+                android:textAllCaps="false"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"

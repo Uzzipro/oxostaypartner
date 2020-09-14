@@ -121,31 +121,27 @@ public class RegisterActivity extends AppCompatActivity {
                 .fadeColor(Color.DKGRAY).build();
 
         /**Aadhaar card front button click**/
-        btAadhaar.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                strFullName = etFullname.getText().toString();
-                strPhNumber = etPhNumber.getText().toString();
-                strAddress = etAddress.getText().toString();
-                if (!TextUtils.isEmpty(strFullName) && !TextUtils.isEmpty(strPhNumber) && !TextUtils.isEmpty(strAddress)) {
-                    if (!hasPermissions(getApplicationContext(), cameraPermissions)) {
-                        requestPermissions(cameraPermissions,
-                                CHOOSE_FILE_REQUEST);
-                    } else {
-                        docType = Constants.AADHAAR;
-                        imageIntent();
-                        registerDto.setFullName(strFullName);
-                        registerDto.setPhNumber(strPhNumber);
-                        registerDto.setAddress(strAddress);
-
-                    }
+        btAadhaar.setOnClickListener(v -> {
+            strFullName = etFullname.getText().toString();
+            strPhNumber = etPhNumber.getText().toString();
+            strAddress = etAddress.getText().toString();
+            if (!TextUtils.isEmpty(strFullName) && !TextUtils.isEmpty(strPhNumber) && !TextUtils.isEmpty(strAddress)) {
+                if (!hasPermissions(getApplicationContext(), cameraPermissions)) {
+                    requestPermissions(cameraPermissions,
+                            CHOOSE_FILE_REQUEST);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                    docType = Constants.AADHAAR;
+                    imageIntent();
+                    registerDto.setFullName(strFullName);
+                    registerDto.setPhNumber(strPhNumber);
+                    registerDto.setAddress(strAddress);
+
                 }
-
-
+            } else {
+                Toast.makeText(getApplicationContext(), "Please fill all the fields", Toast.LENGTH_SHORT).show();
             }
+
+
         });
 
 

@@ -218,8 +218,13 @@
             android:layout_height="1px"
             android:layout_margin="@dimen/_20_dp"
             android:background="@color/colorBlack"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-
+        </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -229,7 +234,39 @@
             android:textColor="@color/colorWhite"
             android:background="@drawable/bt_style"
             android:textAllCaps="false"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100_dp"
+            android:id="@+id/ivHotelPic1"
+            android:layout_marginTop="@dimen/_10_dp"
+            android:src="@drawable/ic_add_image"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_10_dp"
+            android:layout_height="64dp"
+            android:id="@+id/ivHotelPic2"
 
+            android:src="@drawable/ic_add_image"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100_dp"
+            android:id="@+id/ivHotelPic3"
+            android:layout_marginTop="@dimen/_10_dp"
+            android:src="@drawable/ic_add_image"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="@dimen/_10_dp"
+            android:src="@drawable/ic_add_image"
+            android:id="@+id/ivHotelPic4"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="@dimen/_10_dp"
+            android:id="@+id/ivHotelPic5"
+            android:src="@drawable/ic_add_image"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>

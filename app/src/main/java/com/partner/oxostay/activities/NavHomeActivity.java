@@ -113,9 +113,14 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
 
             }
         });
+        editor = getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).edit();
+
+
+    }
+    private void loadHeader()
+    {
         String userKey = this.getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).getString(
                 Constants.USER_KEY, "defaultValueForUserKey");
-        editor = getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).edit();
         hotel_id_shared = this.getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).getString(
                 Constants.HOTEL_ID, "notfound");
 
@@ -176,10 +181,13 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
                 }
             });
         }
-
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadHeader();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

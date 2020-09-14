@@ -1,9 +1,49 @@
 package com.partner.oxostay.dtos;
 
 public class RegisterDto {
-    private String fullName, phNumber, address, aadhaarCard, panCard, gstCert, hotel_name, hotel_desc, hotel_pictures, hotel_address, hotel_rating, hotel_email, hotel_secondary_email, manager_added, rooms_available, room_rate_3_hour, room_rate_6_hour, room_rate_12_hour, room_3h_first_checkin, room_3h_last_checkin, room_6h_first_checkin, room_6h_last_checkin, room_12h_first_checkin, room_12h_last_checkin, fcm_token, date_from, date_to ;
+    private String fullName, phNumber, address, aadhaarCard, panCard, gstCert, hotel_name, hotel_desc, hotel_pictures, hotel_address, hotel_rating, hotel_email, hotel_secondary_email, manager_added, rooms_available, room_rate_3_hour, room_rate_6_hour, room_rate_12_hour, room_3h_first_checkin, room_3h_last_checkin, room_6h_first_checkin, room_6h_last_checkin, room_12h_first_checkin, room_12h_last_checkin, fcm_token, date_from, date_to, hotel_img_1, hotel_img_2, hotel_img_3, hotel_img_4, hotel_img_5;
     private boolean approvedOrNot;
     private AmenetiesDto amenetiesDto;
+
+    public String getHotel_img_5() {
+        return hotel_img_5;
+    }
+
+    public void setHotel_img_5(String hotel_img_5) {
+        this.hotel_img_5 = hotel_img_5;
+    }
+
+    public String getHotel_img_1() {
+        return hotel_img_1;
+    }
+
+    public void setHotel_img_1(String hotel_img_1) {
+        this.hotel_img_1 = hotel_img_1;
+    }
+
+    public String getHotel_img_2() {
+        return hotel_img_2;
+    }
+
+    public void setHotel_img_2(String hotel_img_2) {
+        this.hotel_img_2 = hotel_img_2;
+    }
+
+    public String getHotel_img_3() {
+        return hotel_img_3;
+    }
+
+    public void setHotel_img_3(String hotel_img_3) {
+        this.hotel_img_3 = hotel_img_3;
+    }
+
+    public String getHotel_img_4() {
+        return hotel_img_4;
+    }
+
+    public void setHotel_img_4(String hotel_img_4) {
+        this.hotel_img_4 = hotel_img_4;
+    }
 
     public AmenetiesDto getAmenetiesDto() {
         return amenetiesDto;

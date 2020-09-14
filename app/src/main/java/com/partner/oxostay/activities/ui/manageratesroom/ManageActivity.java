@@ -4,6 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -11,15 +14,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.partner.oxostay.R;
 import com.partner.oxostay.activities.ui.viewdata.ViewDataActivity;
+import com.partner.oxostay.dtos.CityDto;
 import com.partner.oxostay.utils.Constants;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -30,6 +40,7 @@ public class ManageActivity extends AppCompatActivity {
     private LinearLayoutCompat ll3HoursFirstCheck, ll3HoursLastCheck, ll6HoursFirstCheck, ll6HoursLastCheck, ll12HoursFirstCheck, ll12HoursLastCheck;
     private Button btSaveChanges, btViewData;
     private DatabaseReference dbRef;
+    private DatabaseReference dbRefTest;
     private String strDateFrom, strDateTo, three_h_price, six_h_price, twelve_h_price, rooms_available, three_h_first_checkin, three_h_last_checkin, six_h_first_checkin, six_h_last_checkin, twelve_h_first_checkin, twelve_h_last_checkin, hotel_id;
     private EditText et3Hours, et6Hours, et12Hours, etRoomsAvailable;
 
@@ -122,12 +133,12 @@ public class ManageActivity extends AppCompatActivity {
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
             mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
-                if (Integer.toString(selectedMinute).length() == 1) {
-                    tv3HoursFirstcheck.setText(selectedHour + ":" + "0" + selectedMinute);
-                } else {
-                    tv3HoursFirstcheck.setText(selectedHour + ":" + selectedMinute);
-                }
-            }, hour, minute, true);//Yes 24 hour time
+                Time time = new Time(selectedHour, selectedMinute, 0);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mma");
+                //format takes in a Date, and Time is a sublcass of Date
+                String s = simpleDateFormat.format(time);
+                tv3HoursFirstcheck.setText(s);
+            }, hour, minute, false);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();
 
@@ -141,12 +152,15 @@ public class ManageActivity extends AppCompatActivity {
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
             mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
-                if (Integer.toString(selectedMinute).length() == 1) {
-                    tv3HoursLastcheck.setText(selectedHour + ":" + "0" + selectedMinute);
-                } else {
-                    tv3HoursLastcheck.setText(selectedHour + ":" + selectedMinute);
-                }
-            }, hour, minute, true);//Yes 24 hour time
+
+
+                Time time = new Time(selectedHour, selectedMinute, 0);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mma");
+                //format takes in a Date, and Time is a sublcass of Date
+                String s = simpleDateFormat.format(time);
+                tv3HoursLastcheck.setText(s);
+
+            }, hour, minute, false);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();
 
@@ -159,12 +173,12 @@ public class ManageActivity extends AppCompatActivity {
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
             mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
-                if (Integer.toString(selectedMinute).length() == 1) {
-                    tv6HoursFirstcheck.setText(selectedHour + ":" + "0" + selectedMinute);
-                } else {
-                    tv6HoursFirstcheck.setText(selectedHour + ":" + selectedMinute);
-                }
-            }, hour, minute, true);//Yes 24 hour time
+                Time time = new Time(selectedHour, selectedMinute, 0);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mma");
+                //format takes in a Date, and Time is a sublcass of Date
+                String s = simpleDateFormat.format(time);
+                tv6HoursFirstcheck.setText(s);
+            }, hour, minute, false);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();
 
@@ -177,12 +191,12 @@ public class ManageActivity extends AppCompatActivity {
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
             mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
-                if (Integer.toString(selectedMinute).length() == 1) {
-                    tv6Hourslastcheck.setText(selectedHour + ":" + "0" + selectedMinute);
-                } else {
-                    tv6Hourslastcheck.setText(selectedHour + ":" + selectedMinute);
-                }
-            }, hour, minute, true);//Yes 24 hour time
+                Time time = new Time(selectedHour, selectedMinute, 0);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mma");
+                //format takes in a Date, and Time is a sublcass of Date
+                String s = simpleDateFormat.format(time);
+                tv6Hourslastcheck.setText(s);
+            }, hour, minute, false);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();
 
@@ -195,12 +209,12 @@ public class ManageActivity extends AppCompatActivity {
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
             mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
-                if (Integer.toString(selectedMinute).length() == 1) {
-                    tv12HoursFirstcheck.setText(selectedHour + ":" + "0" + selectedMinute);
-                } else {
-                    tv12HoursFirstcheck.setText(selectedHour + ":" + selectedMinute);
-                }
-            }, hour, minute, true);//Yes 24 hour time
+                Time time = new Time(selectedHour, selectedMinute, 0);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mma");
+                //format takes in a Date, and Time is a sublcass of Date
+                String s = simpleDateFormat.format(time);
+                tv12HoursFirstcheck.setText(s);
+            }, hour, minute, false);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();
 
@@ -213,12 +227,12 @@ public class ManageActivity extends AppCompatActivity {
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
             mTimePicker = new TimePickerDialog(ManageActivity.this, (timePicker, selectedHour, selectedMinute) -> {
-                if (Integer.toString(selectedMinute).length() == 1) {
-                    tv12HoursLastcheck.setText(selectedHour + ":" + "0" + selectedMinute);
-                } else {
-                    tv12HoursLastcheck.setText(selectedHour + ":" + selectedMinute);
-                }
-            }, hour, minute, true);//Yes 24 hour time
+                Time time = new Time(selectedHour, selectedMinute, 0);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mma");
+                //format takes in a Date, and Time is a sublcass of Date
+                String s = simpleDateFormat.format(time);
+                tv12HoursLastcheck.setText(s);
+            }, hour, minute, false);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();
 
@@ -227,14 +241,49 @@ public class ManageActivity extends AppCompatActivity {
         hotel_id = this.getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).getString(
                 Constants.HOTEL_ID, "notfound");
         btSaveChanges.setOnClickListener(v -> saveChanges());
-        btViewData.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent n = new Intent(ManageActivity.this, ViewDataActivity.class);
-                startActivity(n);
+        btViewData.setOnClickListener(v -> {
+            Intent n = new Intent(ManageActivity.this, ViewDataActivity.class);
+            startActivity(n);
 
-            }
         });
+
+
+//        dbRefTest = FirebaseDatabase.getInstance().getReference(Constants.OXO_STAY_PARTNER);
+//
+//        et3Hours.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+////                Log.e(TAG, "onTextChanged: "+s.toString());
+//                dbRefTest.child("cities").orderByChild("city_name").startAt(s.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        Log.e(TAG, "onDataChange: "+dataSnapshot.hasChildren());
+//                        if(dataSnapshot.hasChildren())
+//                        {
+//                            CityDto c = dataSnapshot.getValue(CityDto.class);
+//                            Log.e(TAG, "onDataChange: "+c.getCity_name());
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
     }
 
