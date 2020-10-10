@@ -44,10 +44,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.partner.oxostay.R;
 import com.partner.oxostay.dtos.RegisterDto;
-import com.partner.oxostay.services.ApiClient;
 import com.partner.oxostay.services.ApiService;
-import com.partner.oxostay.services.RequestNotification;
-import com.partner.oxostay.services.SendNotificationModel;
 import com.partner.oxostay.utils.Constants;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -56,12 +53,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
-import okhttp3.ResponseBody;
-import retrofit2.Callback;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
@@ -125,7 +121,8 @@ public class RegisterActivity extends AppCompatActivity {
             strFullName = etFullname.getText().toString();
             strPhNumber = etPhNumber.getText().toString();
             strAddress = etAddress.getText().toString();
-            if (!TextUtils.isEmpty(strFullName) && !TextUtils.isEmpty(strPhNumber) && !TextUtils.isEmpty(strAddress)) {
+            if (!TextUtils.isEmpty(strFullName) && !TextUtils.isEmpty(strPhNumber)) {
+                strAddress = "";
                 if (!hasPermissions(getApplicationContext(), cameraPermissions)) {
                     requestPermissions(cameraPermissions,
                             CHOOSE_FILE_REQUEST);
@@ -135,6 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
                     registerDto.setFullName(strFullName);
                     registerDto.setPhNumber(strPhNumber);
                     registerDto.setAddress(strAddress);
+
 
                 }
             } else {
@@ -152,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
                 strFullName = etFullname.getText().toString();
                 strPhNumber = etPhNumber.getText().toString();
                 strAddress = etAddress.getText().toString();
-                if (!TextUtils.isEmpty(strFullName) && !TextUtils.isEmpty(strPhNumber) && !TextUtils.isEmpty(strAddress)) {
+                if (!TextUtils.isEmpty(strFullName) && !TextUtils.isEmpty(strPhNumber)) {
                     if (!hasPermissions(getApplicationContext(), cameraPermissions)) {
                         requestPermissions(cameraPermissions,
                                 CHOOSE_FILE_REQUEST);
@@ -176,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
                 strFullName = etFullname.getText().toString();
                 strPhNumber = etPhNumber.getText().toString();
                 strAddress = etAddress.getText().toString();
-                if (!TextUtils.isEmpty(strFullName) && !TextUtils.isEmpty(strPhNumber) && !TextUtils.isEmpty(strAddress)) {
+                if (!TextUtils.isEmpty(strFullName) && !TextUtils.isEmpty(strPhNumber)) {
                     if (!hasPermissions(getApplicationContext(), cameraPermissions)) {
                         requestPermissions(cameraPermissions,
                                 CHOOSE_FILE_REQUEST);
@@ -200,20 +198,19 @@ public class RegisterActivity extends AppCompatActivity {
         btSubmit.setOnClickListener(v -> {
             dialog.show();
             progressDialog.show();
-            if(registerDto.getFullName() != null && registerDto.getPhNumber() != null && registerDto.getAddress() != null
-            && registerDto.getAadhaarCard() != null && registerDto.getPanCard() != null && registerDto.getGstCert() != null)
-            {
+            if (registerDto.getFullName() != null
+                    && registerDto.getPhNumber() != null
+                    && registerDto.getAadhaarCard() != null
+                    && registerDto.getPanCard() != null
+                    && registerDto.getGstCert() != null) {
 
                 FirebaseInstanceId.getInstance().getInstanceId()
                         .addOnCompleteListener(task -> {
                             if (!task.isSuccessful()) {
                                 Log.e(TAG, "getInstanceId failed", task.getException());
                                 return;
-                            }
-                            else
-                            {
+                            } else {
                                 String token = task.getResult().getToken();
-                                Log.e(TAG, "onComplete: "+token);
                                 registerDto.setFcm_token(token);
                                 registerDto.setApprovedOrNot(false);
                                 registerDto.setHotel_address("");
@@ -236,6 +233,13 @@ public class RegisterActivity extends AppCompatActivity {
                                 registerDto.setRoom_rate_12_hour("");
                                 registerDto.setDate_from("");
                                 registerDto.setDate_to("");
+                                ArrayList<String> hotel_images, amenities;
+                                hotel_images = new ArrayList<>();
+                                amenities = new ArrayList<>();
+                                amenities.add("0");
+                                hotel_images.add("0");
+                                registerDto.setHotel_images(hotel_images);
+                                registerDto.setAmenities(amenities);
 
                                 dbRef.child(Constants.OXO_STAY_PARTNER).child("hotelstobeapproved").push().setValue(registerDto);
                                 dialog.dismiss();
@@ -251,12 +255,9 @@ public class RegisterActivity extends AppCompatActivity {
                             // Get new Instance ID token
 
 
-
                         });
 
-            }
-            else
-            {
+            } else {
                 Toast.makeText(getApplicationContext(), "Please fill all the fields and select all the documents required.", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -305,8 +306,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private void registerSuccess()
-    {
+    private void registerSuccess() {
         LayoutInflater factory = LayoutInflater.from(this);
         final View enterPinCodeView = factory.inflate(R.layout.registration_success, null);
         registerSuccessDialog = new AlertDialog.Builder(this).create();
@@ -436,17 +436,14 @@ public class RegisterActivity extends AppCompatActivity {
 //                                    databaseReferenceproduct.child("users/" + accountType + "s").child(userKeyy).child(aadharBackOrFront).setValue(uri.toString());
 //                                    showToast("Uploaded");
 
-                                    if(TextUtils.equals(docType, Constants.AADHAAR))
-                                    {
+                                    if (TextUtils.equals(docType, Constants.AADHAAR)) {
                                         registerDto.setAadhaarCard(uri.toString());
                                     }
-                                    if(TextUtils.equals(docType, Constants.PAN_CARD))
-                                    {
+                                    if (TextUtils.equals(docType, Constants.PAN_CARD)) {
                                         registerDto.setPanCard(uri.toString());
 
                                     }
-                                    if(TextUtils.equals(docType, Constants.GST_CERT))
-                                    {
+                                    if (TextUtils.equals(docType, Constants.GST_CERT)) {
                                         registerDto.setGstCert(uri.toString());
                                     }
 
@@ -455,11 +452,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             });
 
-                            Toast.makeText(getApplicationContext(), "Uploaded "+docType, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Uploaded " + docType, Toast.LENGTH_SHORT).show();
 
 //                        Log.e(TAG, "uploadImage: " + taskSnapshot.ge);
-
-
 
 
                         }
@@ -481,24 +476,21 @@ public class RegisterActivity extends AppCompatActivity {
                     }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    if(TextUtils.equals(docType, Constants.AADHAAR))
-                    {
+                    if (TextUtils.equals(docType, Constants.AADHAAR)) {
                         btAadhaar.setBackgroundColor(Color.parseColor("#00FF00"));
                         btAadhaar.setTextColor(Color.parseColor("#000000"));
                         btAadhaar.setText("Aadhaar card uploaded");
                         btAadhaar.setOnClickListener(null);
 
                     }
-                    if(TextUtils.equals(docType, Constants.PAN_CARD))
-                    {
+                    if (TextUtils.equals(docType, Constants.PAN_CARD)) {
                         btPanCard.setBackgroundColor(Color.parseColor("#00FF00"));
                         btPanCard.setTextColor(Color.parseColor("#000000"));
                         btPanCard.setText("PAN card uploaded");
                         btPanCard.setOnClickListener(null);
 
                     }
-                    if(TextUtils.equals(docType, Constants.GST_CERT))
-                    {
+                    if (TextUtils.equals(docType, Constants.GST_CERT)) {
                         btGstCertificate.setBackgroundColor(Color.parseColor("#00FF00"));
                         btGstCertificate.setTextColor(Color.parseColor("#000000"));
                         btGstCertificate.setText("GST Certificate uploaded");

@@ -1,9 +1,38 @@
 package com.partner.oxostay.dtos;
 
+import java.util.ArrayList;
+
 public class RegisterDto {
-    private String fullName, phNumber, address, aadhaarCard, panCard, gstCert, hotel_name, hotel_desc, hotel_pictures, hotel_address, hotel_rating, hotel_email, hotel_secondary_email, manager_added, rooms_available, room_rate_3_hour, room_rate_6_hour, room_rate_12_hour, room_3h_first_checkin, room_3h_last_checkin, room_6h_first_checkin, room_6h_last_checkin, room_12h_first_checkin, room_12h_last_checkin, fcm_token, date_from, date_to, hotel_img_1, hotel_img_2, hotel_img_3, hotel_img_4, hotel_img_5;
+    private String fullName, phNumber, address, aadhaarCard, panCard, gstCert, hotel_name, hotel_desc, hotel_pictures, hotel_address, hotel_rating, hotel_email, hotel_secondary_email, manager_added, rooms_available, room_rate_3_hour, room_rate_6_hour, room_rate_12_hour, room_3h_first_checkin, room_3h_last_checkin, room_6h_first_checkin, room_6h_last_checkin, room_12h_first_checkin, room_12h_last_checkin, fcm_token, date_from, date_to, hotel_img_1, hotel_img_2, hotel_img_3, hotel_img_4, hotel_img_5, city_name;
     private boolean approvedOrNot;
     private AmenetiesDto amenetiesDto;
+    private ArrayList<String> hotel_images;
+    private ArrayList<String> amenities;
+
+
+    public String getCity_name() {
+        return city_name;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
+
+    public ArrayList<String> getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(ArrayList<String> amenities) {
+        this.amenities = amenities;
+    }
+
+    public ArrayList<String> getHotel_images() {
+        return hotel_images;
+    }
+
+    public void setHotel_images(ArrayList<String> hotel_images) {
+        this.hotel_images = hotel_images;
+    }
 
     public String getHotel_img_5() {
         return hotel_img_5;

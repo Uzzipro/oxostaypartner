@@ -229,7 +229,6 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
                 startActivity(activityIntent);
                 break;
             case R.id.nav_logout:
-
                 editor.clear();
                 editor.apply();
                 activityIntent = new Intent(NavHomeActivity.this, LoginActivity.class);

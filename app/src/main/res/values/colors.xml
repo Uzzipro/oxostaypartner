@@ -8,4 +8,6 @@
     <color name="colorBlack">#000000</color>
     <color name="textColorPurple">#000000</color>
     <color name="buttonSelectColor">#B9FF47</color>
+    <color name="lightGrey">#CCCCCC</color>
+
 </resources>

@@ -156,6 +156,34 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llHotelCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_20_dp"
+            android:layout_marginTop="@dimen/_10_dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotoregular"
+                android:paddingHorizontal="@dimen/_5_dp"
+                android:text="Hotel City: "
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_15_dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHotelCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="@font/robotoregular"
+                android:text=""
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_15_dp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/llEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -204,6 +232,33 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvHotelSecondaryEmailAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="@font/robotoregular"
+                android:text=""
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_15_dp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llHotelDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/_20_dp"
+            android:layout_marginTop="@dimen/_20_dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotoregular"
+                android:paddingHorizontal="@dimen/_5_dp"
+                android:text="Hotel Desc."
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_15_dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHotelDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"

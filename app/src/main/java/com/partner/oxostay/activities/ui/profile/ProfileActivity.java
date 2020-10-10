@@ -47,19 +47,21 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "ProfileActivity";
     private ImageView ivBack, ivHotelPic1, ivHotelPic2, ivHotelPic3, ivHotelPic4, ivHotelPic5;
     private Button btEdit;
-    private AppCompatTextView tvHotelName, tvLocation, tvHotelContact, tvManagerName, tvHotelAddress, tvHotelEmail, tvHotelSecondaryEmail;
+    private AppCompatTextView tvHotelName, tvLocation, tvHotelContact, tvManagerName, tvHotelAddress, tvHotelEmail, tvHotelSecondaryEmail, tvHotelDesc, tvHotelCity;
     private DatabaseReference dbRef;
     private int CHOOSE_FILE_REQUEST = 1;
     private ProgressDialog progressDialog;
     private FirebaseStorage storage;
     private String imageNumber;
     private StorageReference storageReference;
+    private ArrayList<String> hotel_images;
     private String[] cameraPermissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
 
     @Override
@@ -76,6 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setUpViews() {
+        hotel_images = new ArrayList<>();
         ivBack = findViewById(R.id.ivBack);
         btEdit = findViewById(R.id.btEdit);
         tvHotelName = findViewById(R.id.tvHotelName);
@@ -89,6 +92,8 @@ public class ProfileActivity extends AppCompatActivity {
         ivHotelPic3 = findViewById(R.id.ivHotelPic3);
         ivHotelPic4 = findViewById(R.id.ivHotelPic4);
         ivHotelPic5 = findViewById(R.id.ivHotelPic5);
+        tvHotelDesc = findViewById(R.id.tvHotelDesc);
+        tvHotelCity = findViewById(R.id.tvHotelCity);
         dbRef = FirebaseDatabase.getInstance().getReference(Constants.OXO_STAY_PARTNER);
         btEdit.setOnClickListener(v -> {
             Intent n = new Intent(ProfileActivity.this, EditProfileInfo.class);
@@ -169,7 +174,7 @@ public class ProfileActivity extends AppCompatActivity {
         Bitmap.CompressFormat outputCompressFormat;
         outputCompressFormat = Bitmap.CompressFormat.JPEG;
         CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.OFF).setCropShape(CropImageView.CropShape.RECTANGLE).setFixAspectRatio(true).setAspectRatio(4,3).setOutputCompressFormat(outputCompressFormat)
+                .setGuidelines(CropImageView.Guidelines.OFF).setCropShape(CropImageView.CropShape.RECTANGLE).setFixAspectRatio(true).setAspectRatio(4, 3).setOutputCompressFormat(outputCompressFormat)
                 .start(this);
 //        Intent intent = new Intent();
 //        intent.setType("image/*");
@@ -290,7 +295,19 @@ public class ProfileActivity extends AppCompatActivity {
                                     databaseReferenceproduct = FirebaseDatabase.getInstance().getReference();
 //                                    Log.e(TAG, "onSuccess: " + userKeyy);
 //                                    databaseReferenceproduct.child("users/" + accountType + "s").child(userKeyy).child(aadharBackOrFront).setValue(uri.toString());
-                                    databaseReferenceproduct.child(Constants.OXO_STAY_PARTNER).child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child(imageNumber).setValue(uri.toString());
+
+                                    if(hotel_images.size() == 1)
+                                    {
+                                        if(hotel_images.get(0).equals("0"))
+                                        {
+                                            hotel_images = new ArrayList<>();
+                                            databaseReferenceproduct.child(Constants.OXO_STAY_PARTNER).child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("hotel_images").removeValue();
+
+                                        }
+
+                                    }
+                                    hotel_images.add(uri.toString());
+                                    databaseReferenceproduct.child(Constants.OXO_STAY_PARTNER).child(Constants.HOTELS_APPROVED_KEY).child(hotel_id).child("hotel_images").setValue(hotel_images);
                                     Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_LONG).show();
                                     imageNumber = "";
 
@@ -364,105 +381,166 @@ public class ProfileActivity extends AppCompatActivity {
                 if (dataSnapshot.hasChildren()) ;
                 {
                     RegisterDto registerDto = dataSnapshot.getValue(RegisterDto.class);
+
+                    if (registerDto.getHotel_images() != null) {
+                        hotel_images = registerDto.getHotel_images();
+//                        Log.e(TAG, "onDataChange: "+registerDto.getHotel_images().get(2));
+                    }
+                    if(registerDto.getCity_name() != null)
+                    {
+
+                        tvHotelCity.setText(registerDto.getCity_name());
+
+                    }
                     tvHotelName.setText(registerDto.getHotel_name());
                     tvLocation.setText(registerDto.getHotel_address());
                     tvHotelContact.setText(registerDto.getPhNumber());
                     tvHotelEmail.setText(registerDto.getHotel_email());
                     tvHotelSecondaryEmail.setText(registerDto.getHotel_secondary_email());
                     tvHotelAddress.setText(registerDto.getHotel_address());
+                    tvHotelDesc.setText(registerDto.getHotel_desc());
 
-
-
-                    if(registerDto.getHotel_img_1() != null)
-                    {
-                        Picasso.get().load(registerDto.getHotel_img_1()).into(ivHotelPic1);
-                        ivHotelPic1.setOnClickListener(v -> {
-                            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
-                            ivHotelPic1.buildDrawingCache();
-                            Bitmap image= ivHotelPic1.getDrawingCache();
-
-                            Bundle extras = new Bundle();
-//                                extras.putParcelable("imagebitmap", image);
-                            extras.putString("imageUrl", registerDto.getHotel_img_1());
-                            intent.putExtras(extras);
-                            startActivity(intent);
-
-                        });
+                    if (registerDto.getHotel_images().size() == 1 ) {
+                        if (!registerDto.getHotel_images().get(0).equals("0")) {
+                            Picasso.get().load(registerDto.getHotel_images().get(0)).into(ivHotelPic1);
+                            setImage1(registerDto.getHotel_images().get(0));
+                        }
 
                     }
-                    if(registerDto.getHotel_img_2() != null)
-                    {
-                        Picasso.get().load(registerDto.getHotel_img_2()).into(ivHotelPic2);
-                        ivHotelPic2.setOnClickListener(v -> {
-                            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
-                            ivHotelPic2.buildDrawingCache();
-                            Bitmap image= ivHotelPic1.getDrawingCache();
+                    if (registerDto.getHotel_images().size() == 2) {
+                        if (!registerDto.getHotel_images().get(0).isEmpty() && !registerDto.getHotel_images().get(1).isEmpty()) {
 
-                            Bundle extras = new Bundle();
-//                                extras.putParcelable("imagebitmap", image);
-                            extras.putString("imageUrl", registerDto.getHotel_img_2());
-                            intent.putExtras(extras);
-                            startActivity(intent);
 
-                        });
+                            Picasso.get().load(registerDto.getHotel_images().get(0)).into(ivHotelPic1);
+                            setImage1(registerDto.getHotel_images().get(0));
 
+                            Picasso.get().load(registerDto.getHotel_images().get(1)).into(ivHotelPic2);
+                            setImage2(registerDto.getHotel_images().get(1));
+                        }
 
                     }
 
-                    if(registerDto.getHotel_img_3() != null)
-                    {
-                        Picasso.get().load(registerDto.getHotel_img_3()).into(ivHotelPic3);
-                        ivHotelPic3.setOnClickListener(v -> {
-                            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
-                            ivHotelPic3.buildDrawingCache();
-                            Bitmap image= ivHotelPic3.getDrawingCache();
+                    if (registerDto.getHotel_images().size() == 3) {
 
-                            Bundle extras = new Bundle();
-//                                extras.putParcelable("imagebitmap", image);
-                            extras.putString("imageUrl", registerDto.getHotel_img_3());
-                            intent.putExtras(extras);
-                            startActivity(intent);
+                        Picasso.get().load(registerDto.getHotel_images().get(0)).into(ivHotelPic1);
+                        setImage1(registerDto.getHotel_images().get(0));
 
-                        });
+                        Picasso.get().load(registerDto.getHotel_images().get(1)).into(ivHotelPic2);
+                        setImage2(registerDto.getHotel_images().get(1));
 
+                        Picasso.get().load(registerDto.getHotel_images().get(2)).into(ivHotelPic3);
+                        setImage3(registerDto.getHotel_images().get(2));
                     }
 
-                    if(registerDto.getHotel_img_4() != null)
-                    {
-                        Picasso.get().load(registerDto.getHotel_img_4()).into(ivHotelPic4);
+                    if (registerDto.getHotel_images().size() == 4) {
+                        Picasso.get().load(registerDto.getHotel_images().get(0)).into(ivHotelPic1);
+                        setImage1(registerDto.getHotel_images().get(0));
 
-                        ivHotelPic4.setOnClickListener(v -> {
-                            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
-                            ivHotelPic4.buildDrawingCache();
-                            Bitmap image= ivHotelPic4.getDrawingCache();
+                        Picasso.get().load(registerDto.getHotel_images().get(1)).into(ivHotelPic2);
+                        setImage2(registerDto.getHotel_images().get(1));
 
-                            Bundle extras = new Bundle();
-//                                extras.putParcelable("imagebitmap", image);
-                            extras.putString("imageUrl", registerDto.getHotel_img_4());
-                            intent.putExtras(extras);
-                            startActivity(intent);
+                        Picasso.get().load(registerDto.getHotel_images().get(2)).into(ivHotelPic3);
+                        setImage3(registerDto.getHotel_images().get(2));
 
-                        });
-
+                        Picasso.get().load(registerDto.getHotel_images().get(3)).into(ivHotelPic4);
+                        setImage4(registerDto.getHotel_images().get(3));
                     }
 
-                    if(registerDto.getHotel_img_5() != null)
-                    {
-                        Picasso.get().load(registerDto.getHotel_img_5()).into(ivHotelPic5);
-                        ivHotelPic5.setOnClickListener(v -> {
-                            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
-                            ivHotelPic5.buildDrawingCache();
-                            Bitmap image= ivHotelPic5.getDrawingCache();
 
-                            Bundle extras = new Bundle();
-//                                extras.putParcelable("imagebitmap", image);
-                            extras.putString("imageUrl", registerDto.getHotel_img_5());
-                            intent.putExtras(extras);
-                            startActivity(intent);
+                    if (registerDto.getHotel_images().size() == 5) {
 
-                        });
+                        if (!registerDto.getHotel_images().get(0).isEmpty()) {
+                            Picasso.get().load(registerDto.getHotel_images().get(0)).into(ivHotelPic1);
+                            setImage1(registerDto.getHotel_images().get(0));
+                        }
 
+
+                        if (!registerDto.getHotel_images().get(1).isEmpty()) {
+
+                            Picasso.get().load(registerDto.getHotel_images().get(1)).into(ivHotelPic2);
+                            setImage2(registerDto.getHotel_images().get(1));
+                        }
+
+                        if (!registerDto.getHotel_images().get(2).isEmpty()) {
+
+
+                            Picasso.get().load(registerDto.getHotel_images().get(2)).into(ivHotelPic3);
+                            setImage3(registerDto.getHotel_images().get(2));
+                        }
+
+
+                        if (!registerDto.getHotel_images().get(3).isEmpty()) {
+
+                            Picasso.get().load(registerDto.getHotel_images().get(3)).into(ivHotelPic4);
+                            setImage4(registerDto.getHotel_images().get(3));
+                        }
+
+                        if (!registerDto.getHotel_images().get(4).isEmpty()) {
+
+                            Picasso.get().load(registerDto.getHotel_images().get(4)).into(ivHotelPic5);
+                            setImage5(registerDto.getHotel_images().get(4));
+                        }
                     }
+//                    if(registerDto.getHotel_img_3() != null)
+//                    {
+//                        Picasso.get().load(registerDto.getHotel_img_3()).into(ivHotelPic3);
+//                        hotel_images.add(registerDto.getHotel_img_3());
+//
+//                        ivHotelPic3.setOnClickListener(v -> {
+//                            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
+//                            ivHotelPic3.buildDrawingCache();
+//                            Bitmap image= ivHotelPic3.getDrawingCache();
+//
+//                            Bundle extras = new Bundle();
+//                                extras.putParcelable("imagebitmap", image);
+//                            extras.putString("imageUrl", registerDto.getHotel_img_3());
+//                            intent.putExtras(extras);
+//                            startActivity(intent);
+//
+//                        });
+//
+//                    }
+//
+//                    if(registerDto.getHotel_img_4() != null)
+//                    {
+//                        Picasso.get().load(registerDto.getHotel_img_4()).into(ivHotelPic4);
+//                        hotel_images.add(registerDto.getHotel_img_4());
+//
+//
+//                        ivHotelPic4.setOnClickListener(v -> {
+//                            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
+//                            ivHotelPic4.buildDrawingCache();
+//                            Bitmap image= ivHotelPic4.getDrawingCache();
+//
+//                            Bundle extras = new Bundle();
+//                                extras.putParcelable("imagebitmap", image);
+//                            extras.putString("imageUrl", registerDto.getHotel_img_4());
+//                            intent.putExtras(extras);
+//                            startActivity(intent);
+//
+//                        });
+//
+//                    }
+//
+//                    if(registerDto.getHotel_img_5() != null)
+//                    {
+//                        Picasso.get().load(registerDto.getHotel_img_5()).into(ivHotelPic5);
+//                        hotel_images.add(registerDto.getHotel_img_5());
+//
+//                        ivHotelPic5.setOnClickListener(v -> {
+//                            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
+//                            ivHotelPic5.buildDrawingCache();
+//                            Bitmap image= ivHotelPic5.getDrawingCache();
+//
+//                            Bundle extras = new Bundle();
+//                                extras.putParcelable("imagebitmap", image);
+//                            extras.putString("imageUrl", registerDto.getHotel_img_5());
+//                            intent.putExtras(extras);
+//                            startActivity(intent);
+//
+//                        });
+//
+//                    }
                     progressDialog.dismiss();
                 }
 
@@ -474,4 +552,78 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void setImage1(String imageUrl) {
+
+        ivHotelPic1.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
+            ivHotelPic1.buildDrawingCache();
+            Bitmap image = ivHotelPic1.getDrawingCache();
+
+            Bundle extras = new Bundle();
+//          extras.putParcelable("imagebitmap", image);
+            extras.putString("imageUrl", imageUrl);
+            intent.putExtras(extras);
+            startActivity(intent);
+
+        });
+    }
+
+    private void setImage2(String imageUrl) {
+        ivHotelPic2.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
+            ivHotelPic1.buildDrawingCache();
+
+            Bundle extras = new Bundle();
+//          extras.putParcelable("imagebitmap", image);
+            extras.putString("imageUrl", imageUrl);
+            intent.putExtras(extras);
+            startActivity(intent);
+
+        });
+    }
+
+    private void setImage3(String imageUrl) {
+        ivHotelPic3.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
+            ivHotelPic1.buildDrawingCache();
+
+            Bundle extras = new Bundle();
+//          extras.putParcelable("imagebitmap", image);
+            extras.putString("imageUrl", imageUrl);
+            intent.putExtras(extras);
+            startActivity(intent);
+
+        });
+    }
+
+    private void setImage4(String imageUrl) {
+        ivHotelPic4.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
+            ivHotelPic1.buildDrawingCache();
+
+            Bundle extras = new Bundle();
+//          extras.putParcelable("imagebitmap", image);
+            extras.putString("imageUrl", imageUrl);
+            intent.putExtras(extras);
+            startActivity(intent);
+
+        });
+    }
+
+    private void setImage5(String imageUrl) {
+        ivHotelPic5.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, ImageZoomActivity.class);
+            ivHotelPic1.buildDrawingCache();
+
+            Bundle extras = new Bundle();
+//          extras.putParcelable("imagebitmap", image);
+            extras.putString("imageUrl", imageUrl);
+            intent.putExtras(extras);
+            startActivity(intent);
+
+        });
+    }
+
+
 }

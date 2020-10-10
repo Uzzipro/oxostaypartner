@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_10_dp"
-    android:background="@color/colorWhite"
+    android:background="@color/colorBlack"
     android:elevation="@dimen/_5_dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -37,7 +37,7 @@
                 android:paddingStart="@dimen/_10_dp"
                 android:paddingLeft="@dimen/_8_dp"
                 android:text="Parking"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorWhite" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -51,17 +51,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Yes"
-                android:textColor="@color/colorBlack"
-                android:buttonTint="@color/colorBlack"/>
+                android:textColor="@color/colorWhite"
+                android:buttonTint="@color/colorWhite"/>
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/rbParkingno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/colorBlack"
-                android:background="@color/colorWhite"
+                android:buttonTint="@color/colorWhite"
                 android:text="No"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorWhite" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

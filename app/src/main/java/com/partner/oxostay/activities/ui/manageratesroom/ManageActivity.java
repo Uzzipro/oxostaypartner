@@ -107,10 +107,10 @@ public class ManageActivity extends AppCompatActivity {
             etTo.setText(month + " " + dayOfMonth + "," + " " + year);
         };
 
-
         etTo.setOnClickListener(v -> new DatePickerDialog(ManageActivity.this, date2, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show());
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+        );
 
 
         final DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
