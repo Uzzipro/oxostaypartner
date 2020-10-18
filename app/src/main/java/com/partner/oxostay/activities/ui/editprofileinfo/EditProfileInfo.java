@@ -1,6 +1,7 @@
 package com.partner.oxostay.activities.ui.editprofileinfo;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.app.ActivityCompat;
@@ -10,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -59,6 +61,7 @@ public class EditProfileInfo extends AppCompatActivity {
         setupViews();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void setupViews()
     {
         hotel_id = this.getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).getString(

@@ -18,6 +18,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.ui.AppBarConfiguration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -33,22 +35,31 @@ import com.partner.oxostay.activities.ui.changepassword.ChangepasswordActivity;
 import com.partner.oxostay.activities.ui.manageratesroom.ManageActivity;
 import com.partner.oxostay.activities.ui.policy.PolicyActivity;
 import com.partner.oxostay.activities.ui.profile.ProfileActivity;
+import com.partner.oxostay.adapters.BookingsAdapter;
+import com.partner.oxostay.dtos.BookingsDto;
 import com.partner.oxostay.dtos.RegisterDto;
 import com.partner.oxostay.dtos.UserDto;
 import com.partner.oxostay.utils.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NavHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private String TAG = "NavHomeActivity";
     private AppBarConfiguration mAppBarConfiguration;
     private ActionBarDrawerToggle toggle;
+    private TextView tvComing;
     private Toolbar toolbar;
     private Button btUpcomingBookings, btBookingsHistory;
     private TextView tvHotelName;
     private View headerView;
-    private DatabaseReference dbRef;
+    private DatabaseReference dbRef, dbRef2;
+    private BookingsAdapter bookingsAdapter;
     private SharedPreferences.Editor editor;
     private String hotel_id_shared;
+    private List<BookingsDto> bookingsList;
+    private RecyclerView rvBookings;
 
 
     @Override
@@ -57,6 +68,7 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
         setContentView(R.layout.activity_nav_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        rvBookings = findViewById(R.id.rvBookings);
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -78,7 +90,6 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
 //        NavigationUI.setupWithNavController(navigationView, navController);
 
         drawer = findViewById(R.id.drawer_layout);
-
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         getSupportActionBar().setTitle("My Bookings");
         toggle = new ActionBarDrawerToggle(
@@ -92,17 +103,15 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
 
 
     private void setUpViews() {
+        bookingsList = new ArrayList();
         btUpcomingBookings = findViewById(R.id.btUpcomingBookings);
         btBookingsHistory = findViewById(R.id.btBookingsHistory);
         tvHotelName = headerView.findViewById(R.id.tvHotelName);
         dbRef = FirebaseDatabase.getInstance().getReference(Constants.OXO_STAY_PARTNER);
 
-        btUpcomingBookings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btUpcomingBookings.setBackgroundResource(R.drawable.bookings_bt_left_select);
-                btBookingsHistory.setBackgroundResource(R.drawable.bookings_bt_right);
-            }
+        btUpcomingBookings.setOnClickListener(v -> {
+            btUpcomingBookings.setBackgroundResource(R.drawable.bookings_bt_left_select);
+            btBookingsHistory.setBackgroundResource(R.drawable.bookings_bt_right);
         });
 
         btBookingsHistory.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +125,11 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
         editor = getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).edit();
 
 
+        bookingsList = new ArrayList<>();
+        bookingsAdapter = new BookingsAdapter(this, bookingsList);
+        rvBookings.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvBookings.setAdapter(bookingsAdapter);
+        getData();
     }
     private void loadHeader()
     {
@@ -187,6 +201,37 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
     protected void onResume() {
         super.onResume();
         loadHeader();
+    }
+
+    private void getData()
+    {
+
+        hotel_id_shared = this.getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).getString(
+                Constants.HOTEL_ID, "notfound");
+        dbRef2 = FirebaseDatabase.getInstance().getReference("bookingsPartner").child(hotel_id_shared);
+
+        dbRef2.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
+                    if(dataSnapshot1.hasChildren()) {
+
+                        BookingsDto bookingsDto = dataSnapshot1.getValue(BookingsDto.class);
+                        bookingsDto.setBookingsKey(dataSnapshot1.getKey());
+                        bookingsList.add(bookingsDto);
+                    }
+                    bookingsAdapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override

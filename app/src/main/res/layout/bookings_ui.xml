@@ -1,15 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5_dp"
+    android:elevation="@dimen/_5_dp"
+    android:background="@color/colorWhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ssname" />
+        android:orientation="vertical"
+        android:padding="@dimen/_15_dp"
+        android:id="@+id/llName">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvName"
+            android:text="Nitin Sharma"
+            android:textColor="@color/colorBlack"
+            app:fontFamily="@font/robotomedium"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvBookingId"
+            android:text="Booking Id - BR12345"
+            android:textColor="@color/colorBlack"
+            app:fontFamily="@font/robotoregular"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvGuestContactNo"
+            android:text="Guest contact no. - 412312312"
+            android:textColor="@color/colorBlack"
+            app:fontFamily="@font/robotolight"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:layout_marginVertical="@dimen/_5_dp"
+            android:background="#B9FF47"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check-In"
+            android:textColor="@color/colorBlack"
+            app:fontFamily="@font/robotoregular"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvCheckIn"
+            android:text="05 - August - 2020 at 11:00 hrs"
+            android:textColor="@color/colorBlack"
+            app:fontFamily="@font/robotolight"/>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check-Out"
+            android:textColor="@color/colorBlack"
+            android:layout_marginTop="@dimen/_15_dp"
+            app:fontFamily="@font/robotoregular"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="05 - August - 2020 at 11:00 hrs"
+            android:id="@+id/tvCheckOut"
+            android:textColor="@color/colorBlack"
+            app:fontFamily="@font/robotolight"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:layout_marginVertical="@dimen/_5_dp"
+            android:background="#B9FF47"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Rooms"
+            android:textColor="@color/colorBlack"
+            app:fontFamily="@font/robotoregular"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTotalRooms"
+            android:text="1 Room, 2 Guests"
+            android:textColor="@color/colorBlack"
+            app:fontFamily="@font/robotolight"/>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Amount"
+            android:textColor="@color/colorBlack"
+            android:layout_marginTop="@dimen/_15_dp"
+            app:fontFamily="@font/robotoregular"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rs 1781"
+            android:id="@+id/tvTotalAmount"
+            android:textColor="@color/colorBlack"
+            app:fontFamily="@font/robotolight"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="#FF6565"
+                android:layout_marginLeft="@dimen/_100_dp"
+                android:textColor="@color/colorWhite"
+                android:id="@+id/btNo"
+                android:textSize="@dimen/_10_dp"
+                android:layout_marginRight="@dimen/_10_dp"
+                android:text="NO"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btYes"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="@dimen/_10_dp"
+                android:layout_marginRight="@dimen/_100_dp"
+                android:textSize="@dimen/_10_dp"
+                android:textColor="@color/colorWhite"
+                android:background="#9BFF5E"
+                android:text="YES"/>
+
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

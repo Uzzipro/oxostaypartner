@@ -33,7 +33,6 @@
                 android:gravity="center"
                 android:text="@string/app_name_prefix"/>
 
-
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -104,14 +103,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ssname" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Bookings section, Coming Soon!"
-            android:gravity="center"
-            android:fontFamily="@font/robotomedium"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_20_dp"/>
+            android:id="@+id/rvBookings"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
     <com.google.android.material.floatingactionbutton.FloatingActionButton

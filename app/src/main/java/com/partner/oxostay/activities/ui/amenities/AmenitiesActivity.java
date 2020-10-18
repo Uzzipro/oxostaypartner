@@ -52,6 +52,7 @@ public class AmenitiesActivity extends AppCompatActivity {
         rvAmeneties = findViewById(R.id.rvAmeneties);
         ivSave = findViewById(R.id.ivSave);
         ivBack = findViewById(R.id.ivBack);
+
         amenitiesLabellist = new ArrayList<>();
         amenetiesDtos = new ArrayList<>();
         amenitiesAdapter = new AmenitiesAdapter(this, amenetiesDtos);

@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.partner.oxostay.R;
 
 public class BookingsActivity extends AppCompatActivity {
+    private String TAG = "BookingsActivity";
     private Toolbar toolbar;
     private Button btUpcomingBookings, btBookingsHistory;
 
@@ -29,22 +31,18 @@ public class BookingsActivity extends AppCompatActivity {
         btBookingsHistory = findViewById(R.id.btBookingsHistory);
         setSupportActionBar(toolbar);
 
-        btUpcomingBookings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btUpcomingBookings.setBackgroundResource(R.drawable.bookings_bt_left_select);
-                btBookingsHistory.setBackgroundResource(R.drawable.bookings_bt_right);
-            }
+        btUpcomingBookings.setOnClickListener(v -> {
+            btUpcomingBookings.setBackgroundResource(R.drawable.bookings_bt_left_select);
+            btBookingsHistory.setBackgroundResource(R.drawable.bookings_bt_right);
         });
 
-        btBookingsHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btBookingsHistory.setBackgroundResource(R.drawable.bookings_bt_right_select);
-                btUpcomingBookings.setBackgroundResource(R.drawable.bookings_bt_left);
+        btBookingsHistory.setOnClickListener(v -> {
+            btBookingsHistory.setBackgroundResource(R.drawable.bookings_bt_right_select);
+            btUpcomingBookings.setBackgroundResource(R.drawable.bookings_bt_left);
 
-            }
         });
+
+        Log.e(TAG, "setUpViews: hei");
 
     }
 }
