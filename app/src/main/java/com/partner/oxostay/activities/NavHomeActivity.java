@@ -112,6 +112,8 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
         btUpcomingBookings.setOnClickListener(v -> {
             btUpcomingBookings.setBackgroundResource(R.drawable.bookings_bt_left_select);
             btBookingsHistory.setBackgroundResource(R.drawable.bookings_bt_right);
+            getData(true);
+
         });
 
         btBookingsHistory.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +121,8 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
             public void onClick(View v) {
                 btBookingsHistory.setBackgroundResource(R.drawable.bookings_bt_right_select);
                 btUpcomingBookings.setBackgroundResource(R.drawable.bookings_bt_left);
+                getData(false);
+
 
             }
         });
@@ -129,7 +133,13 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
         bookingsAdapter = new BookingsAdapter(this, bookingsList);
         rvBookings.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvBookings.setAdapter(bookingsAdapter);
-        getData();
+        getData(true);
+    }
+
+
+    private void getBookingsHistoryData()
+    {
+
     }
     private void loadHeader()
     {
@@ -203,9 +213,9 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
         loadHeader();
     }
 
-    private void getData()
+    private void getData(boolean history)
     {
-
+        bookingsAdapter.clear();
         hotel_id_shared = this.getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).getString(
                 Constants.HOTEL_ID, "notfound");
         dbRef2 = FirebaseDatabase.getInstance().getReference("bookingsPartner").child(hotel_id_shared);
@@ -216,10 +226,22 @@ public class NavHomeActivity extends AppCompatActivity implements NavigationView
                 for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
                 {
                     if(dataSnapshot1.hasChildren()) {
-
                         BookingsDto bookingsDto = dataSnapshot1.getValue(BookingsDto.class);
                         bookingsDto.setBookingsKey(dataSnapshot1.getKey());
-                        bookingsList.add(bookingsDto);
+                        if(history)
+                        {
+                            if(bookingsDto.getBooking_Status().equalsIgnoreCase("2"))
+                            {
+                                bookingsList.add(bookingsDto);
+                            }
+                        }
+                        if(!history)
+                        {
+                            if(bookingsDto.getBooking_Status().equalsIgnoreCase("0"))
+                            {
+                                bookingsList.add(bookingsDto);
+                            }
+                        }
                     }
                     bookingsAdapter.notifyDataSetChanged();
                 }

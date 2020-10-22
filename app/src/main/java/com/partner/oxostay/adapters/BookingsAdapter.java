@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,23 +63,20 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.MyView
         final BookingsDto cardData = cardinfoList.get(position);
         String hotel_id = context.getSharedPreferences(Constants.ACCESS_PREFS, MODE_PRIVATE).getString(
                 Constants.HOTEL_ID, "notfound");
-        dbRef = FirebaseDatabase.getInstance().getReference().child("bookingsPartner").child(hotel_id).child(cardData.getBookingsKey());
+        dbRef = FirebaseDatabase.getInstance().getReference();
 
-        holder.tvName.setText(cardData.getBookingsKey());
+        holder.tvName.setText(cardData.getUsername());
         holder.tvCheckIn.setText(cardData.getCheck_in_date() +" at " + cardData.getCheck_in_time());
         holder.tvCheckOut.setText(cardData.getCheck_out_time());
         holder.tvTotalRooms.setText(cardData.getRooms_booked() + " Room(s)");
         holder.tvTotalAmount.setText(cardData.getTotal_amount());
         holder.tvBookingId.setText(cardData.getTransaction_id());
         holder.tvGuestContactNo.setText("Guest contact no. "+cardData.getUser_phnno());
-
         holder.btYes.setOnClickListener(v -> {
-//            Log.e(TAG, "onBindViewHolder: "+cardData.getBookingsKey());
-            dbRef.child("booking_Status").setValue("2");
+            dbRef.child("bookingsPartner").child(hotel_id).child(cardData.getBookingsKey()).child("booking_Status").setValue("2");
         });
         holder.btNo.setOnClickListener(v -> {
-//            Log.e(TAG, "onBindViewHolder: "+cardData.getBookingsKey());
-            dbRef.child("booking_Status").setValue("0");
+            dbRef.child("bookingsPartner").child(hotel_id).child(cardData.getBookingsKey()).child("booking_Status").setValue("0");
         });
 
     }
